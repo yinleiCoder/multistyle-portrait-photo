@@ -1,47 +1,31 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import NavBar from "./components/NavBar.vue";
+import TheLayout from "./components/TheLayout.vue";
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <template v-if="$route.name !== 'login'">
+    <header class="header">
+      <NavBar />
+    </header>
+    <TheLayout>
+      <router-view></router-view>
+    </TheLayout>
+  </template>
+  <template v-else>
+    <router-view></router-view>
+  </template>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.header {
+  border-bottom: 2px solid #000;
+  box-shadow: 4px 4px 10px rgba(255,255,255,.6);
+  position: sticky;
+  top: 0;
+  background-color: #fff;
 }
 
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>

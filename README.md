@@ -1,2 +1,15 @@
-# multistyle-portrait-photo
-多风格人像写真(Vue)
+# 人像匠心
+一个用Vue搭建的人像写真摄影平台，在这里集聚中国摄影师和普通人像写真的爱好者，专注于为人像写真领域服务。
+
+## Features
+- 摄影预设一键导入与导出
+- 上传并管理自己的人像图集
+- 付费下载模特在线上传的人像摄影原图
+- Blender+Threejs剖解3D相机零件学习
+- 管理员CMS内容审核
+
+## API
+- express(nodejs)
+- mongodb 
+
+后期逐步替换为Go微服务。
