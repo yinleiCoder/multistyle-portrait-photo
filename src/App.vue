@@ -19,13 +19,8 @@ import TheLayout from "./components/TheLayout.vue";
 
 <style scoped>
 .header {
-  border-bottom: 2px solid #000;
   box-shadow: 4px 4px 10px rgba(255,255,255,.6);
   position: sticky;
   top: 0;
-  background-color: #fff;
-}
-
-@media (min-width: 1024px) {
 }
 </style>

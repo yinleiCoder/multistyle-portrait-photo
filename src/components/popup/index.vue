@@ -35,7 +35,7 @@ watch(
     </Transition>
     <!-- 内容 -->
     <Transition name="popup-down-up">
-      <div v-if="modelValue" class="content" v-bind="$attrs">
+      <div v-if="modelValue" class="w-screen bg-white dark:bg-zinc-800 z-50 fixed bottom-0" v-bind="$attrs">
         <slot></slot>
       </div>
     </Transition>
@@ -71,13 +71,5 @@ watch(
 .popup-down-up-enter-from,
 .popup-down-up-leave-to {
   transform: translateY(100%);
-}
-
-.content {
-  width: 100vw;
-  background-color: #fff;
-  z-index: 50;
-  position: fixed;
-  bottom: 0;
 }
 </style>
