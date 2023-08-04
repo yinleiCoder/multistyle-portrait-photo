@@ -11,11 +11,6 @@ const router = useRouter();
 const userStore = useUserStore();
 const themeStore = useThemeStore();
 
-async function logout() {
-  await userStore.logoutUser();
-  router.push("/login");
-}
-
 // 输入框
 const inputValue = ref("");
 
@@ -75,6 +70,11 @@ const menuArr = [
     path: "",
   },
 ];
+
+async function logout() {
+  await userStore.logoutUser();
+  router.push("/login");
+}
 </script>
 
 <template>
