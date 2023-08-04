@@ -127,15 +127,15 @@ async function logout() {
     <y-popover class="flex items-center" placement="bottom-left">
       <template #reference>
         <div
-          class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
+          class="relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
         >
           <img
-            class="w-8 h-8 object-cover rounded-sm"
+            class="w-8 h-8 object-cover rounded"
             :src="userStore.user.avatar || defaultAvatar"
           />
           <y-svg-icon
             name="IconVIP"
-            class="h-6 w-6 absolute right-[-20%] bottom-0"
+            class="h-6 w-6 absolute right-[-25%] bottom-[-20%]"
           >
           </y-svg-icon>
         </div>

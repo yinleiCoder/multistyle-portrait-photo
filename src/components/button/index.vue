@@ -15,12 +15,12 @@ const sizeEnum = {
     icon: "w-4 h-4",
   },
   small: {
-    button: "w-7 h-3 text-base",
+    button: "w-6 h-6 text-base",
     icon: "",
   },
   "icon-small": {
-    button: "w-3 h-3",
-    icon: "w-1.5 h-1.5",
+    button: "w-6 h-6",
+    icon: "w-3 h-3",
   },
 };
 </script>

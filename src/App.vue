@@ -22,5 +22,6 @@ import TheLayout from "./components/TheLayout.vue";
   box-shadow: 4px 4px 10px rgba(255,255,255,.6);
   position: sticky;
   top: 0;
+  z-index: 100;
 }
 </style>

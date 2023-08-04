@@ -46,13 +46,19 @@ module.exports = (app) => {
     if (req.Model.modelName === "Post") {
       queryOptions.populate = "owner";
     }
+    const totalCount = await req.Model.countDocuments({
+      $or: [{ username: q }, { title: q }, { content: q }],
+    });
     const items = await req.Model.find({
       $or: [{ username: q }, { title: q }, { content: q }],
     })
       .setOptions(queryOptions)
       .limit(perPage)
       .skip(page * perPage);
-    res.send(items);
+    res.send({
+      total: totalCount,
+      data: items,
+    });
   });
 
   router.get("/:id", async (req, res) => {
@@ -229,7 +235,7 @@ module.exports = (app) => {
     authMiddleware(),
     async (req, res) => {
       const comments = await new Comment({
-        ...req.body,// 若创建二级评论就加上replyTo和rootCommentId
+        ...req.body, // 若创建二级评论就加上replyTo和rootCommentId
         postId: req.params.id,
         commentator: req.user._id,
       }).save();

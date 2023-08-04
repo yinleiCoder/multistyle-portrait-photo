@@ -1,14 +1,14 @@
 <script setup>
-import PostList from "../components/PostList.vue";
-import PostItem from "../components/PostItem.vue";
+// import PostList from "../components/PostList.vue";
+// import PostItem from "../components/PostItem.vue";
 </script>
 
 <template>
   <div>
     <h2 class="title">搜索结果：少女</h2>
-    <PostList>
+    <!-- <PostList>
       <PostItem v-for="n in 10" />
-    </PostList>
+    </PostList> -->
   </div>
 </template>
 
