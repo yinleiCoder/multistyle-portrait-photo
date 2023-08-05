@@ -94,7 +94,7 @@ const handlePictureCardPreview = (uploadFile) => {
           <el-icon><Plus /></el-icon>
         </el-upload>
         <el-dialog v-model="dialogVisible">
-          <img w-full :src="dialogImageUrl" alt="Preview Image" />
+          <img v-lazy w-full :src="dialogImageUrl" alt="Preview Image" />
         </el-dialog>
       </div>
       <div class="actions">

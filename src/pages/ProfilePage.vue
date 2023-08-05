@@ -42,6 +42,7 @@ import TheAvatar from "../components/TheAvatar.vue";
       <p>162条写真</p>
       <div class="posts">
         <img
+          v-lazy
           src="https://img.zcool.cn/community/016ykrjhezviroy1fhqyrz3238.jpeg?x-oss-process=image/auto-orient,1/resize,m_lfit,w_1280,limit_1/sharpen,100/quality,q_100/format,webp"
           alt=""
           class="postImage"

@@ -6,9 +6,10 @@ import { createPinia } from "pinia";
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { useREM } from "./utils/flexible";
-import useTheme from './utils/theme';
+import useTheme from "./utils/theme";
 import customComponent from "./components/index";
-import 'virtual:svg-icons-register'
+import customDirective from "./directives/index";
+import "virtual:svg-icons-register";
 import App from "./App.vue";
 import router from "./router";
 
@@ -19,6 +20,7 @@ app.use(router);
 useREM();
 useTheme();
 app.use(customComponent);
+app.use(customDirective);
 app.use(ElementPlus);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

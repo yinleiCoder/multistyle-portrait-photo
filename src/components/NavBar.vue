@@ -82,7 +82,7 @@ async function logout() {
     class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-2 duration-500"
   >
     <!-- logo -->
-    <router-link to="/" class="flex items-center gap-1 ">
+    <router-link to="/" class="flex items-center gap-1">
       <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
       <div class="inline-block font-semibold whitespace-nowrap">人像匠心</div>
     </router-link>
@@ -130,6 +130,7 @@ async function logout() {
           class="relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
         >
           <img
+            v-lazy
             class="w-8 h-8 object-cover rounded"
             :src="userStore.user.avatar || defaultAvatar"
           />

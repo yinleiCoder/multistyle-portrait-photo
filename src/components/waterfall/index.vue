@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: "waterfall",
+};
+</script>
+
 <script setup>
 import { ref, computed, onMounted, watch, nextTick, onUnmounted } from "vue";
 const props = defineProps({
@@ -193,7 +199,6 @@ watch(
       } else {
         useItemHeight();
       }
-      console.log(itemHeights);
     });
   },
   {
@@ -209,7 +214,7 @@ const reset = () => {
     props.data.forEach((item) => {
       item._style = null;
     });
-  }, 200);
+  }, 100);
 };
 
 // 监听列数的变化实现响应式

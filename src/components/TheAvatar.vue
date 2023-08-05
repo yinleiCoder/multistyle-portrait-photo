@@ -14,7 +14,7 @@ defineProps({
 </script>
 
 <template>
-  <img :src="src || defaultAvatar" alt="avatar" class="avatar" />
+  <img v-lazy :src="src || defaultAvatar" alt="avatar" class="avatar" />
 </template>
 
 <style scoped>

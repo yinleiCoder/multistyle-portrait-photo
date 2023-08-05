@@ -8,7 +8,7 @@ const postStore = usePostStore();
 
 let query = {
   page: 1,
-  per_page: 8,
+  per_page: 10,
 };
 
 onMounted(() => {
