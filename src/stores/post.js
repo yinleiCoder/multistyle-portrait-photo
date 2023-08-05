@@ -6,14 +6,14 @@ export const usePostStore = defineStore("post", () => {
   const postList = ref([]);
   const total = ref(-1);
 
-  async function loadAllPosts({ page = 1, per_page = 10 }) {
-    const posts = await loadPostsService(page, per_page);
+  async function loadAllPosts({ page, per_page, q }) {
+    const posts = await loadPostsService(page, per_page, q);
     postList.value = posts.data;
     total.value = posts.total;
   }
 
-  async function loadMorePosts({ page = 1, per_page = 10 }) {
-    const posts = await loadPostsService(page, per_page);
+  async function loadMorePosts({ page, per_page, q }) {
+    const posts = await loadPostsService(page, per_page, q);
     postList.value.push(...posts.data);
   }
 

@@ -1,18 +1,29 @@
 <script setup>
 import { ref, computed } from "vue";
-import TheAvatar from "./TheAvatar.vue";
 import defaultAvatar from "../assets/defaultAvatar.png";
 import { useUserStore } from "../stores/user";
 import { useThemeStore } from "../stores/theme";
+import { useSearchStore } from "../stores/search";
 import { useRouter } from "vue-router";
 import { THEME_DARK, THEME_LIGHT, THEME_SYSTEM } from "../constants";
 
 const router = useRouter();
 const userStore = useUserStore();
 const themeStore = useThemeStore();
+const searchStore = useSearchStore();
 
 // 输入框
 const inputValue = ref("");
+const onSearchHandle = (val) => {
+  inputValue.value = val;
+  if (val) {
+    searchStore.addHistory(val);
+    searchStore.changeSearchText(val);
+  }
+};
+const onClearSearch =() => {
+  searchStore.changeSearchText('');
+}
 
 // 主题
 const themeArr = [
@@ -88,10 +99,20 @@ async function logout() {
     </router-link>
     <!-- 输入框 -->
     <div class="w-full">
-      <y-search v-model="inputValue">
+      <y-search v-model="inputValue" @search="onSearchHandle" @clear="onClearSearch">
         <template #dropdown>
           <div>
-            <p>弹窗内容测试</p>
+            <!-- 搜索提示 -->
+            <y-hint
+              :searchText="inputValue"
+              v-show="inputValue"
+              @itemClick="onSearchHandle"
+            ></y-hint>
+            <!-- 搜索历史 -->
+            <y-history
+              v-show="!inputValue"
+              @itemClick="onSearchHandle"
+            ></y-history>
           </div>
         </template>
       </y-search>
