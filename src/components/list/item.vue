@@ -1,6 +1,9 @@
 <script setup>
+import { ref } from "vue";
+import { useFullscreen } from "@vueuse/core";
+import { saveAs } from "file-saver";
 import { randomRGB } from "../../utils/color";
-defineProps({
+const props = defineProps({
   post: {
     type: Object,
     default: {},
@@ -9,14 +12,24 @@ defineProps({
     type: Number,
   },
 });
+
+const onDownloadImage = () => {
+  saveAs(props.post.images[0]);
+};
+const imgTarget = ref(null);
+const {enter: onEnterFullScreen} = useFullscreen(imgTarget);
 </script>
 
 <template>
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
-    <div class="relative w-full rounded cursor-zoom-in group" :style="{
-      backgroundColor: randomRGB()
-    }">
+    <div
+      class="relative w-full rounded cursor-zoom-in group"
+      :style="{
+        backgroundColor: randomRGB(),
+      }"
+    >
       <img
+        ref="imgTarget"
         class="w-full rounded bg-transparent object-cover"
         :src="post.images[0]"
         :alt="post.title"
@@ -41,6 +54,7 @@ defineProps({
           icon="IconDownload"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
           size="small"
+          @click="onDownloadImage"
         ></y-button>
         <!-- 全屏 -->
         <y-button
@@ -49,6 +63,7 @@ defineProps({
           icon="IconFullScreen"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
           size="small"
+          @click="onEnterFullScreen"
         ></y-button>
       </div>
     </div>

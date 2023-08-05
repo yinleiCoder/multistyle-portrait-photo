@@ -1,6 +1,7 @@
 import "./assets/main.css";
 import "./styles/element/index.scss";
 import "./styles/tailwindcss/index.scss";
+import "driver.js/dist/driver.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import ElementPlus from "element-plus";

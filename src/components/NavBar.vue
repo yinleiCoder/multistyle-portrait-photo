@@ -93,12 +93,12 @@ async function logout() {
     class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-2 duration-500"
   >
     <!-- logo -->
-    <router-link to="/" class="flex items-center gap-1">
+    <router-link to="/" class="flex items-center gap-1 cursor-pointer guide-home">
       <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
       <div class="inline-block font-semibold whitespace-nowrap">人像匠心</div>
     </router-link>
     <!-- 输入框 -->
-    <div class="w-full">
+    <div class="w-full guide-search">
       <y-search v-model="inputValue" @search="onSearchHandle" @clear="onClearSearch">
         <template #dropdown>
           <div>
@@ -122,7 +122,7 @@ async function logout() {
       <template #reference>
         <y-svg-icon
           :name="svgIconName"
-          class="w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+          class="guide-theme w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
           fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></y-svg-icon>
       </template>
@@ -148,7 +148,7 @@ async function logout() {
     <y-popover class="flex items-center" placement="bottom-left">
       <template #reference>
         <div
-          class="relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
+          class="guide-my relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
         >
           <img
             v-lazy

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomePage from "../pages/HomePage.vue";
-import SearchPage from "../pages/SearchPage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import ProfilePage from "../pages/ProfilePage.vue";
 import ProfileEdittingPage from "../pages/ProfileEdittingPage.vue";
@@ -14,11 +13,6 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomePage,
-    },
-    {
-      path: "/search_result",
-      name: "search_result",
-      component: SearchPage,
     },
     {
       path: "/login",
