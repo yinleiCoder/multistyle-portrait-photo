@@ -34,7 +34,7 @@ const onGoPins = () => {
 <template>
   <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
     <div
-      class="relative w-full rounded cursor-zoom-in group"
+      class="relative w-full rounded cursor-pointer group"
       :style="{
         backgroundColor: randomRGB(),
       }"
@@ -85,7 +85,7 @@ const onGoPins = () => {
     </p>
     <div class="flex items-center mt-1 px-1 gap-2">
       <img
-        class="h-6 w-6 rounded"
+        class="h-6 w-6 rounded object-cover"
         :src="post.owner.avatar"
         :alt="post.owner.username"
       />

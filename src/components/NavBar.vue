@@ -64,7 +64,7 @@ const svgIconName = computed(() => {
 const menuArr = [
   {
     id: 0,
-    title: "个人资料",
+    title: "个人中心",
     icon: "IconProfile",
     path: "/profile",
   },
@@ -86,7 +86,9 @@ const onUserItemClick = async (item) => {
   if (item.id === 2) {
     await userStore.logoutUser();
     router.replace('/login')
+    return 
   }
+  router.push(item.path)
 };
 </script>
 

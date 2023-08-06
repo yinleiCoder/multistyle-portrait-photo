@@ -11,15 +11,15 @@ const postId = ref(route.params.id);
 
 // 当前被选中的图片
 const currentSelectedIndex = ref(0);
-const onItemSelectedClick =(index) => {
-  currentSelectedIndex.value = index
-}
+const onItemSelectedClick = (index) => {
+  currentSelectedIndex.value = index;
+};
 
 // 弹窗popup控制
 const isVisual = ref(false);
 const onShowPopup = (index) => {
   isVisual.value = true;
-  currentSelectedIndex.value = index
+  currentSelectedIndex.value = index;
 };
 const onClosePopup = () => {
   isVisual.value = false;
@@ -117,8 +117,12 @@ const onDownloadImage = (image) => {
             >
               <div class="flex flex-wrap justify-start gap-2 items-start">
                 <span
-                  class="w-[103px] h-[103px] rounded-md cursor-pointer relative after:block after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-md after:bg-black/40 hover:after:bg-transparent hover:after:border-2 hover:after:border-solid hover:after:border-zinc-100"
                   v-for="(item, index) in postStore.currentDetailPost.images"
+                  :class="{
+                    'w-[103px] h-[103px] rounded-md cursor-pointer relative after:block after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-md after:bg-black/40 ': true,
+                    'after:bg-transparent after:border-2 after:border-solid after:border-zinc-100':
+                      index===currentSelectedIndex,
+                  }"
                   @click="onItemSelectedClick(index)"
                 >
                   <img

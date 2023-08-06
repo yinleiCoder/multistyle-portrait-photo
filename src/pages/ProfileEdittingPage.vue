@@ -1,11 +1,35 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import request from "../api/ajax.js";
 import { getToken } from "../utils/token";
-import TheAvatar from "../components/TheAvatar.vue";
-import TheButton from "../components/TheButton.vue";
+import { updateUserInfoService, getUserInfoService } from "../api/user";
+import { useUserStore } from "../stores/user";
+
+const userStore = useUserStore();
+
+onMounted(async () => {
+  // 先查用户的详细信息再更新到userStore()中
+  userStore.updateUserInfo(await getUserInfoService(userStore.user._id));
+});
+
 // 头像上传
-const imageUrl = ref("");
+const isDialogVisible = ref(false);
+const imageUrl = ref(userStore.user.avatar);
+const avatarTarget = ref(null); // 调用element ui 手动上传文件
+const currentBlob = ref("");
+
+const handleAvatarSelectedChange = (uploadFile, uploadFiles) => {
+  const blob = URL.createObjectURL(uploadFile.raw);
+  currentBlob.value = blob;
+  isDialogVisible.value = true;
+};
+
+const handleCroppedImage = (blob) => {
+  isDialogVisible.value = false;
+  // 把数据上传到后端拿到url
+  avatarTarget.value.handleStart(blob);
+  avatarTarget.value.submit();
+};
 
 const handleAvatarSuccess = (response, uploadFile) => {
   // imageUrl.value = URL.createObjectURL(uploadFile.raw)
@@ -21,6 +45,24 @@ const beforeAvatarUpload = (rawFile) => {
     return false;
   }
   return true;
+};
+
+// 数据本地的双向同步
+const changeStoreUserInfo = (key, value) => {
+  userStore.updateUserInfo({
+    ...userStore.user,
+    [key]: value,
+  });
+};
+
+watch(imageUrl, (newImg) => {
+  changeStoreUserInfo("avatar", newImg);
+});
+
+// 发送保存的数据到服务器
+const changeProfileToServer = async () => {
+  debugger;
+  updateUserInfoService(userStore.user);
 };
 
 // 写真照片上传
@@ -49,41 +91,123 @@ const handlePictureCardPreview = (uploadFile) => {
 </script>
 
 <template>
-  <div>
-    <h2 class="title">编辑个人资料</h2>
-    <form class="profileForm">
-      <div class="changeAvatar">
-        <TheAvatar :src="imageUrl" :width="48" :height="48" />
-        <el-upload
-          class="avatar-uploader"
-          :action="request.defaults.baseURL + '/upload'"
-          :headers="{ Authorization: `Bearer ${getToken()}` }"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
+  <div
+    class="h-[calc(100vh-80px)] bg-white dark:bg-zinc-800 duration-500 overflow-auto xl:pt-2"
+  >
+    <div
+      class="relative max-w-screen-lg mx-auto xl:px-4 xl:py-2 md:border md:rounded-md md:shadow-xl md:translate-y-[30%]"
+    >
+      <div
+        class="h-full w-full px-1 pb-4 text-base mt-8 xl:text-center flex gap-10 items-center max-md:flex-col max-md:items-start"
+      >
+        <!-- 头像 -->
+        <div
+          class="relative w-[100px] h-[100px] group xl:cursor-pointer max-md:mb-4"
         >
-          <el-button type="primary">更换头像</el-button>
-        </el-upload>
+          <img
+            :src="imageUrl"
+            class="rounded-[50%] shrink-0 object-cover shadow-2xl w-full h-full block animate-bounce"
+            :alt="userStore.user.username"
+          />
+          <el-upload
+            ref="avatarTarget"
+            class="avatar-uploader"
+            :action="request.defaults.baseURL + '/upload'"
+            :headers="{ Authorization: `Bearer ${getToken()}` }"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :on-change="handleAvatarSelectedChange"
+            :auto-upload="false"
+          >
+            <el-button
+              type="primary"
+              class="bg-black hover:bg-transparent hover:text-black hover:border hover:border-black duration-300"
+              >更换头像</el-button
+            >
+          </el-upload>
+        </div>
+        <div class="flex-1 flex flex-col gap-3 max-md:w-full">
+          <!-- 用户信息 -->
+          <div class="flex gap-4 items-start">
+            <span class="block font-bold dark:text-zinc-300 xl:mb-0"
+              >用户名</span
+            >
+            <y-input
+              class="flex-1"
+              max="10"
+              :modelValue="userStore.user.username"
+              @update:modelValue="changeStoreUserInfo('username', $event)"
+            ></y-input>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span
+              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+              >简介</span
+            >
+            <y-input
+              class="flex-1"
+              max="50"
+              type="textarea"
+              :modelValue="userStore.user.headline"
+              @update:modelValue="changeStoreUserInfo('headline', $event)"
+            ></y-input>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span
+              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+              >地址</span
+            >
+            <y-input
+              class="flex-1"
+              max="10"
+              :modelValue="userStore.user.location"
+              @update:modelValue="changeStoreUserInfo('location', $event)"
+            ></y-input>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span
+              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+              >社交链</span
+            >
+            <y-input
+              class="flex-1"
+              max="10"
+              :modelValue="userStore.user.social_link"
+              @update:modelValue="changeStoreUserInfo('social_link', $event)"
+            ></y-input>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span
+              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+              >性别</span
+            >
+            <div class="genderRadios">
+              <input type="radio" name="gender" id="M" value="M" />
+              男
+              <input type="radio" name="gender" id="F" value="F" />
+              女
+            </div>
+          </div>
+          <!-- 保存修改 -->
+          <y-button
+            class="w-full mt-2 mb-4 dark:text-zinc-300 dark:bg-zinc-800 xl:w-[160px] xl:"
+            @click="changeProfileToServer"
+            >保存</y-button
+          >
+        </div>
       </div>
-      <label for="username">用户名：</label>
-      <input type="text" />
-      <label for="name">昵称：</label>
-      <input type="text" />
-      <label for="intro">简介：</label>
-      <textarea name="" id="" cols="30" rows="10"></textarea>
-      <label for="mobilePhone">手机号: </label>
-      <input type="text" />
-      <label for="sex">性别：</label>
-      <div class="genderRadios">
-        <input type="radio" name="gender" id="M" value="M" />
-        男
-        <input type="radio" name="gender" id="F" value="F" />
-        女
-      </div>
-      <label for="website">网站：</label>
-      <input type="text" />
-      <label for="website">照片墙:</label>
-      <div>
+    </div>
+  </div>
+  <y-dialog title="裁剪头像" v-model="isDialogVisible">
+    <y-cropper
+      :blob="currentBlob"
+      @croppedImage="handleCroppedImage"
+    ></y-cropper>
+  </y-dialog>
+
+  <!--
+    <form class="profileForm">
         <el-upload
           v-model:file-list="fileList"
           action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
@@ -96,50 +220,11 @@ const handlePictureCardPreview = (uploadFile) => {
         <el-dialog v-model="dialogVisible">
           <img v-lazy w-full :src="dialogImageUrl" alt="Preview Image" />
         </el-dialog>
-      </div>
-      <div class="actions">
-        <TheButton type="reset" reverse>取消</TheButton>
-        <TheButton type="submit">确认</TheButton>
-      </div>
     </form>
-  </div>
+ -->
 </template>
 
 <style scoped>
-.title {
-  margin-bottom: 20px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.changeAvatar {
-  display: flex;
-  align-items: center;
-  position: relative;
-  column-gap: 10px;
-}
-
-.profileForm {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  row-gap: 10px;
-  margin-top: 10px;
-}
-
-.profileForm > label {
-  grid-column: 1/2;
-  justify-self: end;
-  position: relative;
-  top: 6px;
-}
-
-.profileForm .actions {
-  grid-column: 1/3;
-  justify-self: end;
-  display: flex;
-  gap: 10px;
-}
-
 .avatar-uploader .avatar {
   width: 178px;
   height: 178px;

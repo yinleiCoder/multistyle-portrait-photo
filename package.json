@@ -12,6 +12,7 @@
     "@unhead/vue": "^1.2.2",
     "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",
+    "cropperjs": "^1.5.13",
     "driver.js": "^1.2.1",
     "element-plus": "^2.3.8",
     "file-saver": "^2.0.5",
