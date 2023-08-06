@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed } from "vue";
-import defaultAvatar from "../assets/defaultAvatar.png";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { useThemeStore } from "../stores/theme";
 import { useSearchStore } from "../stores/search";
-import { useRouter } from "vue-router";
 import { THEME_DARK, THEME_LIGHT, THEME_SYSTEM } from "../constants";
+import defaultAvatar from "../assets/defaultAvatar.png";
 
-const router = useRouter();
 const userStore = useUserStore();
 const themeStore = useThemeStore();
 const searchStore = useSearchStore();
+const router = useRouter();
 
 // 输入框
 const inputValue = ref("");
@@ -21,9 +21,9 @@ const onSearchHandle = (val) => {
     searchStore.changeSearchText(val);
   }
 };
-const onClearSearch =() => {
-  searchStore.changeSearchText('');
-}
+const onClearSearch = () => {
+  searchStore.changeSearchText("");
+};
 
 // 主题
 const themeArr = [
@@ -63,29 +63,31 @@ const svgIconName = computed(() => {
 // 个人中心
 const menuArr = [
   {
-    id: "0",
+    id: 0,
     title: "个人资料",
     icon: "IconProfile",
     path: "/profile",
   },
   {
-    id: "1",
+    id: 1,
     title: "升级vip",
     icon: "IconUpgradeVIP",
     path: "/member",
   },
   {
-    id: "2",
+    id: 2,
     title: "退出登录",
     icon: "IconLogout",
     path: "",
   },
 ];
 
-async function logout() {
-  await userStore.logoutUser();
-  router.push("/login");
-}
+const onUserItemClick = async (item) => {
+  if (item.id === 2) {
+    await userStore.logoutUser();
+    router.replace('/login')
+  }
+};
 </script>
 
 <template>
@@ -93,13 +95,24 @@ async function logout() {
     class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-2 duration-500"
   >
     <!-- logo -->
-    <router-link to="/" class="flex items-center gap-1 cursor-pointer guide-home">
+    <router-link
+      to="/"
+      class="flex items-center gap-1 cursor-pointer guide-home"
+    >
       <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
-      <div class="inline-block font-semibold whitespace-nowrap">人像匠心</div>
+      <div
+        class="inline-block font-semibold whitespace-nowrap dark:text-zinc-200"
+      >
+        人像匠心
+      </div>
     </router-link>
     <!-- 输入框 -->
     <div class="w-full guide-search">
-      <y-search v-model="inputValue" @search="onSearchHandle" @clear="onClearSearch">
+      <y-search
+        v-model="inputValue"
+        @search="onSearchHandle"
+        @clear="onClearSearch"
+      >
         <template #dropdown>
           <div>
             <!-- 搜索提示 -->
@@ -167,6 +180,7 @@ async function logout() {
           class="flex items-center cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-800"
           v-for="item in menuArr"
           :key="item.id"
+          @click="onUserItemClick(item)"
         >
           <y-svg-icon
             :name="item.icon"

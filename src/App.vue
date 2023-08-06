@@ -19,9 +19,8 @@ import TheLayout from "./components/TheLayout.vue";
 
 <style scoped>
 .header {
-  box-shadow: 4px 4px 10px rgba(255,255,255,.6);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10;
 }
 </style>

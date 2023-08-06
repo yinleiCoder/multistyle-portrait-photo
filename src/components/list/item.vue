@@ -13,11 +13,22 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits("onGoPostDetail");
+
+// 下载图片
 const onDownloadImage = () => {
   saveAs(props.post.images[0]);
 };
+// 全屏
 const imgTarget = ref(null);
-const {enter: onEnterFullScreen} = useFullscreen(imgTarget);
+const { enter: onEnterFullScreen } = useFullscreen(imgTarget);
+
+// 进入帖子详情
+const onGoPins = () => {
+  emits("onGoPostDetail", {
+    postId: props.post._id,
+  });
+};
 </script>
 
 <template>
@@ -27,6 +38,7 @@ const {enter: onEnterFullScreen} = useFullscreen(imgTarget);
       :style="{
         backgroundColor: randomRGB(),
       }"
+      @click="onGoPins"
     >
       <img
         ref="imgTarget"

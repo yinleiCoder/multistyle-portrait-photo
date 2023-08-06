@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import ProfilePage from "../pages/ProfilePage.vue";
 import ProfileEdittingPage from "../pages/ProfileEdittingPage.vue";
+import PostDetailPage from "../pages/PostDetailPage.vue";
 import { getToken } from "../utils/token";
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
       path: "/profile/edit",
       name: "profileEdit",
       component: ProfileEdittingPage,
+    },
+    {
+      path: "/posts/:id",
+      name: "postDetail",
+      component: PostDetailPage,
     },
   ],
 });

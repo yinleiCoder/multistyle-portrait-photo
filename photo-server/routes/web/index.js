@@ -3,6 +3,7 @@ module.exports = (app) => {
   const path = require("path");
   const jwt = require("jsonwebtoken");
   const assert = require("http-assert");
+  const axios = require("axios");
   const router = express.Router({
     mergeParams: true,
   });
@@ -251,6 +252,35 @@ module.exports = (app) => {
       rootCommentId,
     }).populate("commentator replyTo");
     res.send(comments);
+  });
+
+  // Google人类行为验证 https://developers.google.com/recaptcha/docs/verify
+  app.post("/captcha", async (req, res) => {
+    if (
+      req.body["g-recaptcha-response"] === undefined ||
+      req.body["g-recaptcha-response"] === "" ||
+      req.body["g-recaptcha-response"] === null
+    ) {
+      res.send({
+        success: false,
+      });
+      return;
+    }
+
+    const verificationURL = "https://www.google.com/recaptcha/api/siteverify";
+
+      // siteKey: "6LdDWoQnAAAAAC5jdVS3cHg15CAKmp2r5hK2mQm-",
+  // secretKey: "6LdDWoQnAAAAADljuk8I1YYV8EeLKYq85Evem1IF",
+    const { data } = axios.post(verificationURL, {
+      secret: "",
+      response: "",
+      remoteip: "",
+    });
+    res.send({
+      success: data.success,
+      challenge_ts: data.challenge_ts,
+      hostname: data.hostname,
+    });
   });
 
   // error handle

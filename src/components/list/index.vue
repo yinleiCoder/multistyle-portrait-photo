@@ -5,6 +5,7 @@ export default {
 </script>
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useRouter } from "vue-router";
 import { usePostStore } from "../../stores/post";
 import { useSearchStore } from "../../stores/search";
 import PostItem from "./item.vue";
@@ -12,6 +13,7 @@ import { isMobileTerminal } from "../../utils/flexible";
 
 const postStore = usePostStore();
 const searchStore = useSearchStore();
+const router = useRouter();
 
 let query = {
   page: 1,
@@ -27,7 +29,6 @@ const loading = ref(false);
 const isFinished = ref(false);
 const getPostsData = async () => {
   if (isFinished.value) return;
-  console.log('first')
   if (postStore.postList.length > 0) {
     query.page += 1;
   }
@@ -55,9 +56,17 @@ watch(
       page: 1,
       q: val,
     });
-    getPostsData()
+    getPostsData();
   }
 );
+
+// 统一接管进入详情页，主动介入浏览器堆栈管理
+const onGoToPostDetail = (data) => {
+  postStore.currentPostId = data.postId;
+  // 修改浏览器的URL并不会跳转页面
+  // history.pushState(null, null, `/posts/${data.postId}`)
+  router.push(`/posts/${data.postId}`);
+};
 </script>
 
 <template>
@@ -70,7 +79,12 @@ watch(
       :picturePreReading="true"
     >
       <template v-slot="{ item, width, index }">
-        <PostItem :post="item" :width="width" :key="item._id" />
+        <PostItem
+          :post="item"
+          :width="width"
+          :key="item._id"
+          @onGoPostDetail="onGoToPostDetail"
+        />
       </template>
     </y-waterfall>
   </y-infinite>
