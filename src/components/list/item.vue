@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { useFullscreen } from "@vueuse/core";
-import { saveAs } from "file-saver";
 import { randomRGB } from "../../utils/color";
+import { weiboShare } from "../../utils/share";
+
 const props = defineProps({
   post: {
     type: Object,
@@ -15,13 +16,14 @@ const props = defineProps({
 
 const emits = defineEmits("onGoPostDetail");
 
-// 下载图片
-const onDownloadImage = () => {
-  saveAs(props.post.images[0]);
-};
 // 全屏
 const imgTarget = ref(null);
 const { enter: onEnterFullScreen } = useFullscreen(imgTarget);
+
+// 微博分享
+const onWeiboShare = () => {
+  weiboShare();
+};
 
 // 进入帖子详情
 const onGoPins = () => {
@@ -50,23 +52,13 @@ const onGoPins = () => {
       <div
         class="hidden opacity-0 w-full h-full bg-zinc-900/50 absolute top-0 left-0 rounded duration-300 group-hover:opacity-100 xl:block"
       >
-        <!-- 分享 -->
-        <y-button class="absolute top-1.5 left-1.5">分享</y-button>
-        <!-- 点赞 -->
+        <!-- 微博分享 -->
         <y-button
           class="absolute top-1.5 right-1.5"
           type="info"
-          icon="IconHeart"
+          icon="IconShare"
+          @click="onWeiboShare"
           iconClass="fill-zinc-900 dark:fill-zinc-200"
-        ></y-button>
-        <!-- 下载 -->
-        <y-button
-          class="absolute bottom-1.5 left-1.5 bg-zinc-100/70"
-          type="info"
-          icon="IconDownload"
-          iconClass="fill-zinc-900 dark:fill-zinc-200"
-          size="small"
-          @click="onDownloadImage"
         ></y-button>
         <!-- 全屏 -->
         <y-button

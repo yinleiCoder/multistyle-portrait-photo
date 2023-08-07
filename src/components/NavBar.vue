@@ -103,7 +103,7 @@ const onUserItemClick = async (item) => {
     >
       <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
       <div
-        class="inline-block font-semibold whitespace-nowrap dark:text-zinc-200"
+        class="inline-block font-semibold whitespace-nowrap dark:text-zinc-200 max-md:hidden"
       >
         人像匠心
       </div>

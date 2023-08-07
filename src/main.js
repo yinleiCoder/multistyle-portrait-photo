@@ -11,8 +11,8 @@ import { VueRecaptchaPlugin } from 'vue-recaptcha'
 import { useREM } from "./utils/flexible";
 import useTheme from "./utils/theme";
 import customComponent from "./components/index";
-import customDirective from "./directives/index";
 import "virtual:svg-icons-register";
+import customDirective from "./directives/index";
 import App from "./App.vue";
 import router from "./router";
 

@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from 'vue'
+import { computed } from "vue";
 const props = defineProps({
   name: {
     type: String,
@@ -8,14 +8,16 @@ const props = defineProps({
   color: {
     type: String,
   },
+  fillClass: {// tailwindcss
+    type: String,   
+  }
 });
 
-const symbolId = computed(() => `#icon-${props.name}`)
+const symbolId = computed(() => `#icon-${props.name}`);
 </script>
 
 <template>
   <svg aria-hidden="true">
-    <use :xlink:href="symbolId" :fill="color" />
+    <use :xlink:href="symbolId" :fill="color" :class="fillClass" />
   </svg>
 </template>
-

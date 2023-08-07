@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -7,6 +7,4 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style scoped>
-@media (min-width: 1024px) {
-}
 </style>
