@@ -139,7 +139,7 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
             isLogin ? "登录" : "注册"
           }}</y-button>
         </ChallengeV3>
-        <div>response: {{ challengeV3Response }}</div>
+        <!-- <div>response: {{ challengeV3Response }}</div> -->
       </VeeForm>
       <!-- 第三方登录 -->
       <div class="flex justify-around mt-4" v-if="isLogin">
@@ -147,7 +147,7 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
         <y-svg-icon class="cursor-pointer w-10 h-10" name="IconQQ"></y-svg-icon>
         <!-- wechat -->
         <y-svg-icon
-          class="cursor-pointer w-10 h-10"
+          class="cursor-pointer w-8 h-8"
           name="IconWechat"
         ></y-svg-icon>
       </div>

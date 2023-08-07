@@ -2,9 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
-import ProfilePage from "../pages/ProfilePage.vue";
-import ProfileEdittingPage from "../pages/ProfileEdittingPage.vue";
-import PostDetailPage from "../pages/PostDetailPage.vue";
 import { getToken } from "../utils/token";
 
 const router = createRouter({
@@ -23,28 +20,38 @@ const router = createRouter({
     {
       path: "/profile",
       name: "profile",
-      component: ProfilePage,
+      component: () => import("../pages/ProfilePage.vue"),
     },
     {
       path: "/profile/edit",
       name: "profileEdit",
-      component: ProfileEdittingPage,
+      component: () => import("../pages/ProfileEdittingPage.vue"),
     },
     {
       path: "/posts/:id",
       name: "postDetail",
-      component: PostDetailPage,
+      component: () => import("../pages/PostDetailPage.vue"),
+    },
+    {
+      path: "/posts/new",
+      name: "postPush",
+      component: () => import("../pages/PostPushPage.vue"),
+    },
+    {
+      path: "/sponsor",
+      name: "sponsor",
+      component: () => import("../pages/SponsorPage.vue"),
     },
   ],
 });
 
-router.beforeEach(to => {
-  if(to.name !== 'login' && !getToken()) {
-    return {name: 'login'}
+router.beforeEach((to) => {
+  if (to.name !== "login" && !getToken()) {
+    return { name: "login" };
   }
-  if(to.name === 'login' && getToken()) {
-    return {name: 'home'}
+  if (to.name === "login" && getToken()) {
+    return { name: "home" };
   }
-})
+});
 
 export default router;

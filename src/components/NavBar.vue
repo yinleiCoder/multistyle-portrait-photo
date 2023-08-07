@@ -70,9 +70,9 @@ const menuArr = [
   },
   {
     id: 1,
-    title: "升级vip",
-    icon: "IconUpgradeVIP",
-    path: "/member",
+    title: "赞助",
+    icon: "IconSupportMoney",
+    path: "/sponsor",
   },
   {
     id: 2,
@@ -85,16 +85,16 @@ const menuArr = [
 const onUserItemClick = async (item) => {
   if (item.id === 2) {
     await userStore.logoutUser();
-    router.replace('/login')
-    return 
+    router.replace("/login");
+    return;
   }
-  router.push(item.path)
+  router.push(item.path);
 };
 </script>
 
 <template>
   <nav
-    class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-2 duration-500"
+    class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-4 duration-500"
   >
     <!-- logo -->
     <router-link
@@ -132,12 +132,20 @@ const onUserItemClick = async (item) => {
         </template>
       </y-search>
     </div>
+    <!-- 发布帖子 -->
+    <router-link to="/posts/new"
+      ><y-svg-icon
+        class="guide-push w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
+        fillClass="fill-zinc-900 dark:fill-zinc-300"
+        name="IconPostEdit"
+      ></y-svg-icon
+    ></router-link>
     <!-- 主题设置 -->
     <y-popover placement="bottom-left">
       <template #reference>
         <y-svg-icon
           :name="svgIconName"
-          class="guide-theme w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+          class="guide-theme w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
           fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></y-svg-icon>
       </template>
@@ -160,7 +168,7 @@ const onUserItemClick = async (item) => {
       </div>
     </y-popover>
     <!-- 用户个人中心 -->
-    <y-popover class="flex items-center" placement="bottom-left">
+    <y-popover class="flex items-center shrink-0" placement="bottom-left">
       <template #reference>
         <div
           class="guide-my relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"

@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 // 引导页driver.js
 import { driver } from "driver.js";
 import steps from "./steps";
+import { USER_FEEDBACK_LINK } from "../../constants";
 
 let driverObj = null;
 onMounted(() => {
@@ -20,6 +21,11 @@ onMounted(() => {
 // 开始功能引导
 const onGuideStart = () => {
     driverObj.drive();
+}
+
+// 用户反馈
+const onGoToFeedback = () => {
+  window.open(USER_FEEDBACK_LINK, '_blank')
 }
 </script>
 
@@ -52,6 +58,7 @@ const onGuideStart = () => {
       <div class="w-[140px] overflow-hidden">
         <div
           class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
+          @click="onGoToFeedback"
         >
           <y-svg-icon
             name="IconAvatarBoy21"

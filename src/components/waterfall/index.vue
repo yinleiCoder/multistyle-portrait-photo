@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, onUnmounted } from "vue";
+import { ref, computed, onMounted, watch, nextTick, onUnmounted, onUpdated } from "vue";
 const props = defineProps({
   data: {
     type: Array,
@@ -230,6 +230,33 @@ onUnmounted(() => {
   props.data.forEach((item) => {
     delete item._style;
   });
+});
+
+// 添加一个标志来标识是否需要更新瀑布流位置
+let shouldUpdateWaterfall = ref(false);
+
+// 监听props.data的变化，在新数据加载后手动触发重新计算位置
+watch(
+  () => props.data,
+  (newVal) => {
+    // 判断是否需要更新瀑布流位置
+    if (newVal.length > props.data.length) {
+      shouldUpdateWaterfall.value = true;
+    }
+  },
+  {
+    deep: true,
+  }
+);
+
+// 在数据更新后触发重新计算位置和更新视图
+onUpdated(() => {
+  if (shouldUpdateWaterfall.value) {
+    shouldUpdateWaterfall.value = false;
+    nextTick(() => {
+      reset();
+    });
+  }
 });
 </script>
 

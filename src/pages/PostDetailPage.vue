@@ -35,7 +35,7 @@ const onDownloadImage = (image) => {
   <div class="w-full bg-white dark:bg-zinc-800 duration-500">
     <div class="w-full max-w-screen-lg mx-auto relative max-lg:px-2">
       <h1 class="font-bold text-4xl pt-4 mb-4 dark:text-zinc-100">
-        {{ postStore.currentDetailPost.title }}
+        {{ postStore.currentDetailPost?.title }}
       </h1>
       <div class="flex justify-start items-center mb-4 select-none">
         <y-svg-icon

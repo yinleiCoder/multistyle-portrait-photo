@@ -14,6 +14,13 @@ export default [
     },
   },
   {
+    element: ".guide-push",
+    popover: {
+      title: "发布帖子",
+      description: "点击这里可以去发布帖子，上传您的原图 或者P过后的图片哦！记录美好瞬间！还在等什么？就是现在！",
+    },
+  },
+  {
     element: ".guide-theme",
     popover: { title: "网站主题", description: "点击它可以选择切换当前网站主题为亮色、暗色或跟随系统" },
   },
