@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ElMessage } from "element-plus";
 import { getToken } from "../utils/token";
 
 const instance = axios.create({
@@ -20,7 +21,7 @@ instance.interceptors.response.use(
     return responseData;
   },
   (err) => {
-    // element ui error message todo
+    ElMessage.error(err.response.data.message);
     return Promise.reject(err);
   }
 );

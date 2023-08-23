@@ -28,6 +28,7 @@ const changeTheme = (theme) => {
       themeClassName = matchMedia.matches ? "dark" : "light";
       break;
   }
+  // 这是tailwindcss手动改变主题的方式
   document.querySelector("html").className = themeClassName;
 };
 

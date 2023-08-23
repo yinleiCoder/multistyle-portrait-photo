@@ -36,7 +36,7 @@ const emitLoad = () => {
       loading.value = true;
       emits("onLoad");
     }
-  }, 100);
+  });
 };
 </script>
 
@@ -44,19 +44,17 @@ const emitLoad = () => {
   <!-- 长列表无限滚动 -->
   <div>
     <slot></slot>
-    <div ref="loadingTarget" class="py-4">
+    <div ref="loadingTarget" class="py-2 flex justify-center item-center gap-x-1">
       <!-- 加载更多 -->
       <y-svg-icon
-        v-show="loading"
-        class="w-8 h-8 mx-auto animate-spin"
-        name="IconLoading"
+      v-show="isFinished"
+      class="w-6 h-6 animate-spin"
+      name="IconLoading"
       ></y-svg-icon>
       <!-- 没有更多数据 -->
       <p v-if="isFinished" class="text-center text-base text-zinc-400">
-        后台已经没有更多数据！
+        亲，暂时没有更多数据可以提供！
       </p>
     </div>
   </div>
 </template>
-
-<style scoped></style>

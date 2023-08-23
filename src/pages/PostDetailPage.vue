@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { saveAs } from "file-saver";
 import { usePostStore } from "../stores/post";
@@ -32,9 +32,9 @@ const onDownloadImage = (image) => {
 </script>
 
 <template>
-  <div class="w-full bg-white dark:bg-zinc-800 duration-500">
-    <div class="w-full max-w-screen-lg mx-auto relative max-lg:px-2">
-      <h1 class="font-bold text-4xl pt-4 mb-4 dark:text-zinc-100">
+  <div class="w-full h-auto bg-white dark:bg-zinc-800 duration-300">
+    <div class="w-full max-w-screen-lg mx-auto relative max-lg:px-2 pb-4">
+      <h1 class="font-bold text-3xl py-2 text-zinc-600 dark:text-zinc-100">
         {{ postStore.currentDetailPost?.title }}
       </h1>
       <div class="flex justify-start items-center mb-4 select-none">
@@ -44,12 +44,12 @@ const onDownloadImage = (image) => {
         ></y-svg-icon>
         <span class="text-zinc-400">{{ postId }}</span>
       </div>
-      <div class="mb-4 flex gap-x-2 items-center">
+      <div class="my-6 flex gap-x-2 items-center">
         <img
-          class="w-10 h-10 object-cover rounded-full shadow-lg border-2 border-black cursor-pointer"
+          class="w-10 h-10 object-cover rounded-full hover:shadow-lg border-2 border-black cursor-pointer duration-300"
           :src="postStore.currentDetailPost.owner.avatar"
         />
-        <span class="font-bold tracking-widest">{{
+        <span class="font-normal tracking-widest">{{
           postStore.currentDetailPost.owner.username
         }}</span>
       </div>
@@ -64,15 +64,15 @@ const onDownloadImage = (image) => {
           v-lazy
           @click="onShowPopup(index)"
           :src="item"
-          class="mt-2 cursor-zoom-in rounded"
+          class="my-2 cursor-zoom-in rounded"
         />
       </div>
-      <div class="flex justify-center my-6">
+      <div class="flex justify-center">
         <y-svg-icon name="IconLike" class="w-10 h-10"></y-svg-icon>
       </div>
     </div>
     <!-- 弹窗用网格显示图片 -->
-    <y-popup v-model="isVisual" class="flex overflow-hidden z-100">
+    <y-popup v-model="isVisual" class="h-[95%] flex overflow-hidden z-100">
       <div class="flex-1 flex justify-center items-center relative">
         <div class="absolute inset-0 bg-black z-1"></div>
         <div class="relative max-h-full">
@@ -95,11 +95,9 @@ const onDownloadImage = (image) => {
           </div>
         </div>
       </div>
-      <div class="w-[380px] px-6 py-4 bg-zinc-800 text-zinc-100">
+      <div class="w-[380px] px-2 py-4 bg-zinc-800 text-zinc-100">
         <div class="h-full relative">
-          <div
-            class="mb-4 flex gap-x-2 items-center border-b-2 py-2 border-zinc-600"
-          >
+          <div class="mb-4 flex gap-x-2 items-center">
             <img
               class="w-10 h-10 object-cover rounded-full cursor-pointer"
               :src="postStore.currentDetailPost.owner.avatar"
@@ -115,18 +113,18 @@ const onDownloadImage = (image) => {
             <div
               class="w-full h-full overflow-x-hidden overflow-y-auto relative"
             >
-              <div class="flex flex-wrap justify-start gap-2 items-start">
+              <div class="grid grid-cols-[repeat(3,_1fr)] gap-2">
                 <span
                   v-for="(item, index) in postStore.currentDetailPost.images"
                   :class="{
-                    'w-[103px] h-[103px] rounded-md cursor-pointer relative after:block after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-md after:bg-black/40 ': true,
+                    'rounded-md cursor-pointer relative after:block after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-md after:bg-black/40 ': true,
                     'after:bg-transparent after:border-2 after:border-solid after:border-zinc-100':
-                      index===currentSelectedIndex,
+                      index === currentSelectedIndex,
                   }"
                   @click="onItemSelectedClick(index)"
                 >
                   <img
-                    class="w-full h-full object-cover rounded-md"
+                    class="aspect-square object-cover rounded-md"
                     :src="item"
                   />
                 </span>
@@ -142,12 +140,10 @@ const onDownloadImage = (image) => {
         </div>
         <y-svg-icon
           name="IconDelete"
-          class="w-8 h-8 fixed right-2 top-2 z-1 cursor-pointer"
+          class="w-6 h-6 absolute right-2 top-2 z-999 cursor-pointer"
           @click="onClosePopup"
         ></y-svg-icon>
       </div>
     </y-popup>
   </div>
 </template>
-
-<style scoped></style>

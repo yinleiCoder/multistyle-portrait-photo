@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 const props = defineProps({
-  name: {
+  name: {// icons目录下的文件名,交由Vite自动处理
     type: String,
     required: true,
   },

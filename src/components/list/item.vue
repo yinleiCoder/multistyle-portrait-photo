@@ -26,7 +26,7 @@ const onWeiboShare = () => {
 };
 
 // 进入帖子详情
-const onGoPins = () => {
+const onGoToPostDetail = () => {
   emits("onGoPostDetail", {
     postId: props.post._id,
   });
@@ -34,17 +34,17 @@ const onGoPins = () => {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
+  <div class="dark:bg-zinc-800 rounded pb-1">
     <div
       class="relative w-full rounded cursor-pointer group"
       :style="{
         backgroundColor: randomRGB(),
       }"
-      @click="onGoPins"
+      @click="onGoToPostDetail"
     >
       <img
         ref="imgTarget"
-        class="w-full rounded bg-transparent object-cover"
+        class="w-full rounded object-contain"
         :src="post.images[0]"
         :alt="post.title"
       />
@@ -54,7 +54,7 @@ const onGoPins = () => {
       >
         <!-- 微博分享 -->
         <y-button
-          class="absolute top-1.5 right-1.5"
+          class="absolute top-1.5 right-1.5 bg-zinc-100/70"
           type="info"
           icon="IconShare"
           @click="onWeiboShare"
@@ -72,10 +72,10 @@ const onGoPins = () => {
       </div>
     </div>
     <!-- 帖子及作者信息 -->
-    <p class="text-sm mt-1 font-bold text-zinc-900 dark:text-zinc-300 px-1">
+    <p class="text-sm p-1 font-bold text-zinc-900 dark:text-zinc-300">
       {{ post.title }}
     </p>
-    <div class="flex items-center mt-1 px-1 gap-2">
+    <div class="flex items-center p-1 gap-2">
       <img
         class="h-6 w-6 rounded object-cover"
         :src="post.owner.avatar"

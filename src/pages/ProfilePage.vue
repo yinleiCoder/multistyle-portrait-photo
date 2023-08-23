@@ -1,155 +1,121 @@
 <script setup>
-import TheAvatar from "../components/TheAvatar.vue";
+import { ref, onMounted } from "vue";
+import { getUserInfoService } from "../api/user";
+
+const props = defineProps({
+  uid: {
+    type: String,
+    required: true,
+  },
+});
+const user = ref({});
+
+onMounted(async () => {
+  user.value = await getUserInfoService(props.uid);
+});
 </script>
 
 <template>
-  <div>
-    <div class="profileContainer">
-      <TheAvatar
-        class="userAvatar"
-        :width="186"
-        :height="186"
-        :borderWidth="2"
-      />
-      <div class="profile">
-        <p class="name">
-          <span>尹磊</span>
-          <router-link to="/profile/edit">编辑个人资料</router-link>
-        </p>
-        <p class="handle">@yin_lei</p>
-        <div class="description">
-          <pre>
-                        98年骚男
-                        毕业于计算机学院软件工程专业
-                    </pre
-          >
-          <p class="website">https://www.yinlei.online/</p>
-        </div>
-      </div>
-    </div>
-    <div class="tabs">
-      <div class="tab active">
-        <p>我的</p>
-      </div>
-      <div class="tab">
-        <p>赞过</p>
-      </div>
-      <div class="tab">
-        <p>收藏</p>
-      </div>
-    </div>
-    <div class="tabContent">
-      <p>162条写真</p>
-      <div class="posts">
+  <div class="w-full h-screen flex flex-col">
+    <section class="py-6 w-full flex justify-center items-start gap-10">
+      <div class="w-24 h-24 flex flex-col gap-1">
         <img
-          v-lazy
-          src="https://img.zcool.cn/community/016ykrjhezviroy1fhqyrz3238.jpeg?x-oss-process=image/auto-orient,1/resize,m_lfit,w_1280,limit_1/sharpen,100/quality,q_100/format,webp"
-          alt=""
-          class="postImage"
-          v-for="n in 9"
+          class="w-full h-full rounded-full object-cover"
+          :src="user.avatar"
+          :alt="user.username"
         />
+        <router-link to="/profile/edit">
+          <y-button type="primary" class="w-full">编辑个人资料</y-button>
+        </router-link>
       </div>
-    </div>
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl text-zinc-700 font-bold tracking-wider">
+          {{ user.username }}
+        </h1>
+        <p class="flex gap-1 items-center">
+          <y-svg-icon class="w-4 h-4" name="IconIdentify"></y-svg-icon>
+          <span class="text-zinc-400 text-sm">{{ user._id }}</span>
+        </p>
+        <p class="flex gap-2">
+          <span
+            class="flex gap-1 items-center border shadow rounded px-1 py-0.5"
+          >
+            <y-svg-icon
+              class="w-4 h-4"
+              :name="user.gender === 'male' ? 'IconMale' : 'IconFemale'"
+            ></y-svg-icon>
+            <span class="text-sm"> 25岁 </span>
+          </span>
+          <span class="text-sm border shadow px-1 rounded py-0.5">{{
+            user.location
+          }}</span>
+        </p>
+        <p class="text-gray-700 text-lg">{{ user.headline }}</p>
+        <p class="text-gray-500 text-sm cursor-pointer">
+          {{ user.social_link }}
+        </p>
+        <div></div>
+      </div>
+    </section>
+    <section class="px-2 sm:px-6">
+      <input type="radio" name="tab" id="works" class="hidden" checked />
+      <input type="radio" name="tab" id="likes" class="hidden" />
+      <input type="radio" name="tab" id="histories" class="hidden" />
+      <div class="my-4 nav">
+        <label for="works">
+          <span class="cursor-pointer py-1 px-2 rounded-md inline-block"
+            >作品</span
+          >
+        </label>
+        <label for="likes">
+          <span class="cursor-pointer py-1 px-2 rounded-md inline-block"
+            >喜欢</span
+          >
+        </label>
+        <label for="histories">
+          <span class="cursor-pointer py-1 px-2 rounded-md inline-block"
+            >观看历史</span
+          >
+        </label>
+      </div>
+
+      <div class="hidden tab-works p-2 border rounded-lg shadow-md">
+        <img src="https://img.zcool.cn/community/017m90bzsjyd1kvmxow68s3130.jpg?x-oss-process=image/format,webp" alt="">
+        <img src="https://img.zcool.cn/community/01qgflc5tavfwzfovowyjp3739.jpg?x-oss-process=image/format,webp" alt="">
+      </div>
+      <div class="hidden tab-likes p-2 rounded-xl shadow-md">
+        <img src="https://img.zcool.cn/community/017m90bzsjyd1kvmxow68s3130.jpg?x-oss-process=image/format,webp" alt="">
+        <img src="https://img.zcool.cn/community/01qgflc5tavfwzfovowyjp3739.jpg?x-oss-process=image/format,webp" alt="">
+      </div>
+      <div class="hidden tab-histories p-2 rounded-xl shadow-md">
+        <img src="https://img.zcool.cn/community/017m90bzsjyd1kvmxow68s3130.jpg?x-oss-process=image/format,webp" alt="">
+        <img src="https://img.zcool.cn/community/01qgflc5tavfwzfovowyjp3739.jpg?x-oss-process=image/format,webp" alt="">
+      </div>
+    </section>
   </div>
 </template>
-
 <style scoped>
-.profileContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 10vw;
+#works:checked ~ .tab-works {
+  @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2;
 }
 
-.profileContainer .userAvatar {
-  justify-self: end;
+#works:checked ~ .nav label[for="works"] span {
+  @apply border font-bold duration-300 shadow-md;
 }
 
-.profile .name {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
+#likes:checked ~ .tab-likes {
+  @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2;
 }
 
-.profile .name > span {
-  font-size: 26px;
-  font-weight: bold;
+#likes:checked ~ .nav label[for="likes"] span {
+  @apply border font-bold duration-300 shadow-md;
 }
 
-.profile .name > a {
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 4px 6px;
-  text-decoration: none;
-  transition: all 0.3s;
+#histories:checked ~ .tab-histories {
+  @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2;
 }
 
-.profile .name > a:hover {
-  background: #000;
-  color: #fff;
-  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
-}
-
-.profile .handle {
-  margin-top: 4px;
-  color: #84848484;
-}
-
-.profile .description {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 88px);
-  justify-content: center;
-  margin-top: 7vmin;
-  margin-bottom: 10px;
-}
-
-.tab {
-  text-align: center;
-  padding: 6px 0;
-  cursor: pointer;
-  border: 1px solid #000;
-}
-
-.tab.active {
-  background: #000;
-}
-
-.tab:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  border-right: none;
-}
-
-.tab:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border-left: none;
-}
-
-.tab.active > p {
-  color: #fff;
-}
-
-.tabContent > p {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.posts {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-}
-
-.postImage {
-  width: 100%;
-  border-radius: 6px;
-  object-fit: cover;
+#histories:checked ~ .nav label[for="histories"] span {
+  @apply border font-bold duration-300 shadow-md;
 }
 </style>

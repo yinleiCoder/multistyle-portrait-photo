@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply scrollbar-thin scrollbar-thumb-transparent xl:scrollbar-thumb-zinc-400 xl:dark:scrollbar-thumb-zinc-900 scrollbar-track-transparent; 
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}

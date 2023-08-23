@@ -66,22 +66,20 @@ const changeProfileToServer = async () => {
 </script>
 
 <template>
-  <div
-    class="h-[calc(100vh-80px)] bg-white dark:bg-zinc-800 duration-500 overflow-auto xl:pt-2"
-  >
+  <div class="h-screen box-border">
     <div
-      class="relative max-w-screen-lg mx-auto xl:px-4 xl:py-2 md:border md:rounded-md md:shadow-xl md:translate-y-[30%]"
+      class="relative max-w-screen-lg mx-auto xl:px-4 p-2 md:border md:rounded-md md:shadow-xl md:translate-y-[30%]"
     >
       <div
-        class="h-full w-full px-1 pb-4 text-base mt-8 xl:text-center flex gap-10 items-center max-md:flex-col max-md:items-start"
+        class="h-full w-full text-base max-sm:mt-8 xl:text-center flex gap-10 items-center max-md:flex-col max-md:items-start"
       >
         <!-- 头像 -->
         <div
-          class="relative w-[100px] h-[100px] group xl:cursor-pointer max-md:mb-4"
+          class="relative w-[50px] h-[50px] md:w-[100px] md:h-[100px] group xl:cursor-pointer max-md:mb-4"
         >
           <img
             :src="imageUrl"
-            class="rounded-[50%] shrink-0 object-cover shadow-2xl w-full h-full block animate-bounce"
+            class="rounded-full shrink-0 object-cover shadow-2xl w-full h-full block animate-bounce"
             :alt="userStore.user.username"
           />
           <el-upload
@@ -102,71 +100,61 @@ const changeProfileToServer = async () => {
             >
           </el-upload>
         </div>
-        <div class="flex-1 flex flex-col gap-3 max-md:w-full">
+        <div class="flex-1 grid grid-cols-1  sm:grid-cols-[auto_1fr] gap-2 max-md:w-full">
           <!-- 用户信息 -->
-          <div class="flex gap-4 items-start">
-            <span class="block font-bold dark:text-zinc-300 xl:mb-0"
-              >用户名</span
-            >
-            <y-input
-              class="flex-1"
-              max="10"
-              :modelValue="userStore.user.username"
-              @update:modelValue="changeStoreUserInfo('username', $event)"
-            ></y-input>
-          </div>
-          <div class="flex gap-4 items-start">
-            <span
-              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
-              >简介</span
-            >
-            <y-input
-              class="flex-1"
-              max="50"
-              type="textarea"
-              :modelValue="userStore.user.headline"
-              @update:modelValue="changeStoreUserInfo('headline', $event)"
-            ></y-input>
-          </div>
-          <div class="flex gap-4 items-start">
-            <span
-              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
-              >地址</span
-            >
-            <y-input
-              class="flex-1"
-              max="10"
-              :modelValue="userStore.user.location"
-              @update:modelValue="changeStoreUserInfo('location', $event)"
-            ></y-input>
-          </div>
-          <div class="flex gap-4 items-start">
-            <span
-              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
-              >社交链</span
-            >
-            <y-input
-              class="flex-1"
-              max="10"
-              :modelValue="userStore.user.social_link"
-              @update:modelValue="changeStoreUserInfo('social_link', $event)"
-            ></y-input>
-          </div>
-          <div class="flex gap-4 items-start">
-            <span
-              class="block font-bold whitespace-nowrap dark:text-zinc-300 xl:mb-0"
-              >性别</span
-            >
-            <div class="genderRadios">
-              <input type="radio" name="gender" id="M" value="M" />
-              男
-              <input type="radio" name="gender" id="F" value="F" />
-              女
-            </div>
+          <span class="block font-normal dark:text-zinc-300 xl:mb-0"
+            >用户名</span
+          >
+          <y-input
+            class="flex-1"
+            max="10"
+            :modelValue="userStore.user.username"
+            @update:modelValue="changeStoreUserInfo('username', $event)"
+          ></y-input>
+          <span
+            class="block font-normal whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+            >简介</span
+          >
+          <y-input
+            class="flex-1"
+            max="50"
+            type="textarea"
+            :modelValue="userStore.user.headline"
+            @update:modelValue="changeStoreUserInfo('headline', $event)"
+          ></y-input>
+          <span
+            class="block font-normal whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+            >地址</span
+          >
+          <y-input
+            class="flex-1"
+            max="10"
+            :modelValue="userStore.user.location"
+            @update:modelValue="changeStoreUserInfo('location', $event)"
+          ></y-input>
+          <span
+            class="block font-normal whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+            >社交链</span
+          >
+          <y-input
+            class="flex-1"
+            max="10"
+            :modelValue="userStore.user.social_link"
+            @update:modelValue="changeStoreUserInfo('social_link', $event)"
+          ></y-input>
+          <span
+            class="block font-normal whitespace-nowrap dark:text-zinc-300 xl:mb-0"
+            >性别</span
+          >
+          <div class="genderRadios">
+            <input type="radio" name="gender" id="M" value="M" />
+            男
+            <input type="radio" name="gender" id="F" value="F" />
+            女
           </div>
           <!-- 保存修改 -->
           <y-button
-            class="w-full mt-2 mb-4 dark:text-zinc-300 dark:bg-zinc-800 xl:w-[160px] xl:"
+            class="w-full mt-2 mb-4 dark:text-zinc-300 dark:bg-zinc-800"
             @click="changeProfileToServer"
             >保存</y-button
           >

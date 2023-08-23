@@ -1,15 +1,15 @@
 <script>
 export default {
-  name: "PostList",
-};
+  name: 'PostList'
+}
 </script>
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { usePostStore } from "../../stores/post";
 import { useSearchStore } from "../../stores/search";
-import PostItem from "./item.vue";
 import { isMobileTerminal } from "../../utils/flexible";
+import PostItem from "./item.vue";
 
 const postStore = usePostStore();
 const searchStore = useSearchStore();
@@ -27,6 +27,7 @@ onMounted(() => {
 
 const loading = ref(false);
 const isFinished = ref(false);
+
 const getPostsData = async () => {
   if (isFinished.value) return;
   if (postStore.postList.length > 0) {
@@ -72,7 +73,7 @@ const onGoToPostDetail = (data) => {
 <template>
   <y-infinite v-model="loading" :isFinished="isFinished" @onLoad="getPostsData">
     <y-waterfall
-      class="px-1 w-full"
+      class="w-full"
       :data="postStore.postList"
       nodeKey="_id"
       :column="isMobileTerminal ? 2 : 5"

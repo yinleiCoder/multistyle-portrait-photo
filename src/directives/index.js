@@ -1,5 +1,6 @@
 import lazy from "./modules/lazy";
 
+// 自定义指令，全局使用
 export default {
   install(app) {
     const directives = import.meta.globEager("./modules/*.js");

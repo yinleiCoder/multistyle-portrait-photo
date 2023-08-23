@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted } from "vue";
-// 引导页driver.js
 import { driver } from "driver.js";
 import steps from "./steps";
 import { USER_FEEDBACK_LINK } from "../../constants";
@@ -9,7 +8,7 @@ let driverObj = null;
 onMounted(() => {
   driverObj = driver({
     showProgress: true,
-    allowClose: false,
+    allowClose: true,
     nextBtnText: "下一步",
     prevBtnText: "上一步",
     doneBtnText: "已完成",
@@ -19,7 +18,7 @@ onMounted(() => {
 });
 
 // 开始功能引导
-const onGuideStart = () => {
+const onStartGuide = () => {
     driverObj.drive();
 }
 
@@ -28,30 +27,28 @@ const onGoToFeedback = () => {
   window.open(USER_FEEDBACK_LINK, '_blank')
 }
 </script>
-
 <template>
-  <div class="fixed bottom-10 right-5">
+  <div class="fixed bottom-10 right-8">
     <!-- 引导页 -->
     <div
-      class="guide-btn w-8 h-8 mb-1 bg-white dark:bg-zinc-900 border dark:border-0 border-zinc-200 rounded-full flex justify-center items-center cursor-pointer duration-300 hover:shadow-lg group"
-      @click="onGuideStart"
+      class="guide-btn w-8 h-8 mb-2 bg-white dark:bg-zinc-800 border border-zinc-200 rounded-full flex justify-center items-center cursor-pointer duration-300 hover:shadow-lg group"
+      @click="onStartGuide"
     >
       <y-svg-icon
         name="IconGuide"
         class="w-6 h-6"
-        fillClass="fill-zinc-900 dark:fill-zinc-200 group-hover:bg-red"
+        fillClass="fill-zinc-900 dark:fill-zinc-200"
       ></y-svg-icon>
     </div>
     <!-- 反馈页 -->
     <y-popover class="flex items-center" placement="top-left">
       <template #reference>
         <div
-          class="guide-feedback w-8 h-8 mb-1 bg-white dark:bg-zinc-900 border dark:border-0 border-zinc-200 rounded-full flex justify-center items-center cursor-pointer duration-300 hover:shadow-lg group"
+          class="guide-feedback w-8 h-8 mb-2 bg-white dark:bg-zinc-800 border border-zinc-200 rounded-full flex justify-center items-center cursor-pointer duration-300 hover:shadow-lg group"
         >
           <y-svg-icon
             name="IconFeedback"
             class="w-6 h-6"
-            fillClass="fill-zinc-900 dark:fill-zinc-200 group-hover:bg-red"
           ></y-svg-icon>
         </div>
       </template>
@@ -62,7 +59,7 @@ const onGoToFeedback = () => {
         >
           <y-svg-icon
             name="IconAvatarBoy21"
-            class="w-4 h-4 mr-1"
+            class="w-6 h-6 mr-1"
             fillClass="fill-zinc-900 dark:fill-zinc-300"
           ></y-svg-icon>
           <span class="text-zinc-800 dark:text-zinc-300 text-sm">吐槽反馈</span>

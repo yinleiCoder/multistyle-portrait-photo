@@ -10,6 +10,7 @@ import {
 import { useRecaptchaProvider, useChallengeV3 } from "vue-recaptcha";
 import { useUserStore } from "../stores/user";
 import { LOGIN_TYPE_USERNAME } from "../constants";
+import bgPic from "../assets/bgPic.png";
 
 onMounted(() => {
   useRecaptchaProvider();
@@ -71,25 +72,23 @@ const validateConfirmPassword = (confirmPassword, passwords) => {
   return true;
 };
 defineRule("validateConfirmPassword", validateConfirmPassword);
-
-
 </script>
 
 <template>
   <div
-    class="relative h-screen bg-white dark:zinc-800 text-center xl:bg-zinc-200 flex justify-center items-center"
+    class="relative h-screen dark:zinc-800 text-center flex justify-center items-center"
   >
     <div
-      class="block px-3 dark:bg-zinc-800 xl:bg-white xl:w-[388px] xl:dark:bg-zinc-900 xl:m-auto xl:py-4 xl:rounded xl:shadow-lg"
+      class="block p-2 border sm:w-full xl:w-[30%] xl:dark:bg-zinc-800 xl:m-auto xl:p-4 rounded shadow-lg"
     >
       <div class="flex items-center justify-center gap-x-1 mb-4">
-        <y-svg-icon name="IconLogo" class="w-12 h-12"></y-svg-icon>
+        <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
         <span class="text-lg font-bold">人像匠心</span>
       </div>
       <VeeForm @submit="onLoginHandle">
         <VeeField
           type="text"
-          class="dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b w-full outline-0 pb-1 px-1 mb-4 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900"
+          class="bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 w-full outline-0 p-1 mb-4 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900 rounded"
           placeholder="用户名"
           v-model="loginForm.username"
           name="username"
@@ -102,7 +101,7 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
         />
         <VeeField
           type="password"
-          class="mb-4 dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b w-full outline-0 pb-1 px-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900"
+          class="mb-4 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 w-full outline-0 p-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900 rounded"
           placeholder="密码"
           v-model="loginForm.password"
           name="password"
@@ -116,7 +115,7 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
         <VeeField
           v-if="!isLogin"
           type="password"
-          class="mb-4 dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b w-full outline-0 pb-1 px-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900"
+          class="mb-4 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 w-full outline-0 p-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:default:bg-zinc-900 rounded"
           placeholder="确认密码"
           v-model="loginForm.confirmPassword"
           name="confirmPassword"
@@ -130,7 +129,7 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
         />
         <p
           @click="isLogin = !isLogin"
-          class="pb-6 leading-[0px] text-right cursor-pointer hover:text-red-400 text-sm duration-300"
+          class="pb-6 leading-[0px] text-right cursor-pointer hover:text-orange-500 text-sm duration-300"
         >
           {{ isLogin ? "还没有账号？点击注册" : "已有帐号？点击登录" }}
         </p>
@@ -142,10 +141,8 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
         <!-- <div>response: {{ challengeV3Response }}</div> -->
       </VeeForm>
       <!-- 第三方登录 -->
-      <div class="flex justify-around mt-4" v-if="isLogin">
-        <!-- QQ -->
+      <div class="flex justify-around mt-2" v-if="isLogin">
         <y-svg-icon class="cursor-pointer w-10 h-10" name="IconQQ"></y-svg-icon>
-        <!-- wechat -->
         <y-svg-icon
           class="cursor-pointer w-8 h-8"
           name="IconWechat"
@@ -154,5 +151,3 @@ defineRule("validateConfirmPassword", validateConfirmPassword);
     </div>
   </div>
 </template>
-
-<style scoped></style>

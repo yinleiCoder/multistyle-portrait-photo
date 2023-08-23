@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-
 import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import { getToken } from "../utils/token";
@@ -18,9 +17,10 @@ const router = createRouter({
       component: LoginPage,
     },
     {
-      path: "/profile",
+      path: "/profile/:uid",
       name: "profile",
       component: () => import("../pages/ProfilePage.vue"),
+      props: true,
     },
     {
       path: "/profile/edit",
@@ -45,6 +45,7 @@ const router = createRouter({
   ],
 });
 
+// 路由守卫
 router.beforeEach((to) => {
   if (to.name !== "login" && !getToken()) {
     return { name: "login" };

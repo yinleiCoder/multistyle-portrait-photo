@@ -28,19 +28,19 @@ const onClearSearch = () => {
 // 主题
 const themeArr = [
   {
-    id: "0",
+    id: 0,
     type: THEME_LIGHT,
     icon: "IconThemeLight",
     name: "light",
   },
   {
-    id: "1",
+    id: 1,
     type: THEME_DARK,
     icon: "IconDark",
     name: "dark",
   },
   {
-    id: "2",
+    id: 2,
     type: THEME_SYSTEM,
     icon: "IconSystem",
     name: "system",
@@ -48,7 +48,7 @@ const themeArr = [
 ];
 // 1.监听主题的切换行为
 // 2.根据行为保存当前需要展示的主题到状态管理中
-const onItemClick = (themeItem) => {
+const onThemeItemClick = (themeItem) => {
   themeStore.changeThemeType(themeItem.type);
 };
 // 3.根据状态管理中保存的当前主题，展示当前主题下的显示图标
@@ -87,26 +87,21 @@ const onUserItemClick = async (item) => {
     await userStore.logoutUser();
     router.replace("/login");
     return;
+  } else if (item.id === 0) {
+    router.push(`/profile/${userStore.user._id}`);
+  } else {
+    router.push(item.path);
   }
-  router.push(item.path);
 };
 </script>
 
 <template>
   <nav
-    class="w-full bg-white dark:bg-zinc-800 border-b-2 dark:border-b-zinc-700 px-6 py-2 flex items-center gap-4 duration-500"
+    class="w-full bg-white dark:bg-zinc-800 px-2 md:px-6 py-2 flex items-center gap-2 xl:gap-4 duration-300"
   >
     <!-- logo -->
-    <router-link
-      to="/"
-      class="flex items-center gap-1 cursor-pointer guide-home"
-    >
+    <router-link to="/" class="cursor-pointer guide-home">
       <y-svg-icon name="IconLogo" class="w-10 h-10"></y-svg-icon>
-      <div
-        class="inline-block font-semibold whitespace-nowrap dark:text-zinc-200 max-md:hidden"
-      >
-        人像匠心
-      </div>
     </router-link>
     <!-- 输入框 -->
     <div class="w-full guide-search">
@@ -135,7 +130,7 @@ const onUserItemClick = async (item) => {
     <!-- 发布帖子 -->
     <router-link to="/posts/new"
       ><y-svg-icon
-        class="guide-push w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
+        class="guide-push w-6 h-6 cursor-pointer duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
         fillClass="fill-zinc-900 dark:fill-zinc-300"
         name="IconPostEdit"
       ></y-svg-icon
@@ -145,20 +140,20 @@ const onUserItemClick = async (item) => {
       <template #reference>
         <y-svg-icon
           :name="svgIconName"
-          class="guide-theme w-6 h-6 cursor-pointer rounded-sm duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
+          class="guide-theme w-6 h-6 cursor-pointer duration-500 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 shrink-0"
           fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></y-svg-icon>
       </template>
       <div class="w-[140px] overflow-hidden">
         <div
-          class="flex items-center cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          class="flex items-center cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 my-1"
           v-for="item in themeArr"
           :key="item.id"
-          @click="onItemClick(item)"
+          @click="onThemeItemClick(item)"
         >
           <y-svg-icon
             :name="item.icon"
-            class="w-4 h-4 mr-1"
+            class="w-4 h-4 mr-2"
             fillClass="fill-zinc-900 dark:fill-zinc-300"
           ></y-svg-icon>
           <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
@@ -171,30 +166,25 @@ const onUserItemClick = async (item) => {
     <y-popover class="flex items-center shrink-0" placement="bottom-left">
       <template #reference>
         <div
-          class="guide-my relative flex items-center p-0.5 rounded cursor-pointer duration-200 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
+          class="guide-my relative flex items-center rounded cursor-pointer duration-300 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-900"
         >
           <img
             v-lazy
             class="w-8 h-8 object-cover rounded"
             :src="userStore.user.avatar || defaultAvatar"
           />
-          <y-svg-icon
-            name="IconVIP"
-            class="h-6 w-6 absolute right-[-25%] bottom-[-20%]"
-          >
-          </y-svg-icon>
         </div>
       </template>
       <div class="w-[140px] overflow-hidden">
         <div
-          class="flex items-center cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          class="flex items-center cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 my-1"
           v-for="item in menuArr"
           :key="item.id"
           @click="onUserItemClick(item)"
         >
           <y-svg-icon
             :name="item.icon"
-            class="w-4 h-4 mr-1"
+            class="w-4 h-4 mr-2"
             fillClass="fill-zinc-900 dark:fill-zinc-300"
           ></y-svg-icon>
           <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
@@ -202,8 +192,6 @@ const onUserItemClick = async (item) => {
           }}</span>
         </div>
       </div>
-      <!-- <li><router-link to="/profile">个人主页</router-link></li>
-          <li @click="logout">退出登录</li> -->
     </y-popover>
   </nav>
 </template>

@@ -12,8 +12,8 @@ export const useREM = () => {
   });
 };
 
-const { width } = useWindowSize();
 // 判断当前是否是移动设备
+const { width } = useWindowSize();
 export const isMobileTerminal = computed(() => {
   return width.value < 475;
 });

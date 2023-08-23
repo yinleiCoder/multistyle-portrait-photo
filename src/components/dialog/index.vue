@@ -60,14 +60,14 @@ const onClose = () => {
       <div
         v-if="isVisible"
         @click="onClose"
-        class="w-screen h-screen bg-zinc-900/80 z-40 fixed top-0 left-0"
+        class="w-screen h-screen bg-zinc-900/80 z-50 fixed top-0 left-0"
       ></div>
     </Transition>
     <!-- 内容区 -->
-    <Transition name="down-up">
+    <Transition name="fade">
       <div
         v-if="isVisible"
-        class="max-w-[80%] max-h-[80%] overflow-auto fixed top-[10%] left-[50%] translate-x-[-50%] z-50 px-2 py-1.5 rounded border xl:min-w-[35%] bg-white"
+        class="overflow-x-hidden fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 px-1 py-1 rounded border bg-white dark:bg-zinc-800"
       >
         <div v-if="title" class="text-lg text-zinc-900 mb-2">{{ title }}</div>
         <div class="text-base text-zinc-900 mb-2">
@@ -94,15 +94,5 @@ const onClose = () => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-.down-up-enter-active,
-.down-up-leave-active {
-  transition: all 0.3s;
-}
-
-.down-up-enter-from,
-.down-up-leave-to {
-  transform: translateY(100%);
 }
 </style>

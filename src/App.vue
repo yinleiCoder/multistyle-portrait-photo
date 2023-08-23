@@ -5,7 +5,7 @@ import TheLayout from "./components/TheLayout.vue";
 
 <template>
   <template v-if="$route.name !== 'login'">
-    <header class="header">
+    <header class="sticky top-0 left-0 right-0 z-20">
       <NavBar />
     </header>
     <TheLayout>
@@ -18,9 +18,4 @@ import TheLayout from "./components/TheLayout.vue";
 </template>
 
 <style scoped>
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
 </style>

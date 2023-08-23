@@ -18,6 +18,7 @@ const placementEnum = [
 import { ref, watch, nextTick } from "vue";
 const isVisible = ref(false);
 let timeout;
+
 const onMouseenter = () => {
   if (timeout) {
     clearTimeout(timeout);
@@ -62,8 +63,7 @@ const contentStyle = ref({
   top: 0,
   left: 0,
 });
-//5.根据prop计算样式对象
-// 气泡展示时再计算位置
+//5.根据prop计算样式对象,气泡展示时再计算位置
 watch(isVisible, (val) => {
   if (!val) return;
   nextTick(() => {

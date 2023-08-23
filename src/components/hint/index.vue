@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import {watchDebounced} from '@vueuse/core'
 import { loadInputHintService } from "../../api/post";
+
 const props = defineProps({
   searchText: {
     type: String,
@@ -42,7 +43,7 @@ watchDebounced(() => props.searchText, getHintData, {
     <div
       v-for="(item, index) in hintData"
       :key="index"
-      class="py-1 pl-1 text-base text-zinc-500  rounded cursor-pointer duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-900"
+      class="p-1 text-base text-zinc-500  rounded cursor-pointer duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-900"
       v-html="highlightText(item)"
       @click="onItemClick(item)"
     >

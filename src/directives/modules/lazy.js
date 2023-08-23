@@ -1,6 +1,6 @@
 import { useIntersectionObserver } from "@vueuse/core";
 
-// 图片懒加载(vue3自定义指令)
+// 图片懒加载(vue3自定义指令)， 也可以改用写图片懒加载SDK利用data-xx配合vueuse懒加载图片
 export default {
   // 在用户无法看到图片时不加载图片，可以看到图片时再去加载图片
   mounted(el) {

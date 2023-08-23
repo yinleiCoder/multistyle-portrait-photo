@@ -65,7 +65,6 @@ watch(
   { immediate: true }
 );
 </script>
-
 <template>
   <div>
     <slot>
