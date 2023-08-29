@@ -28,6 +28,7 @@ const asideWidth = computed(() => {
           <NabBar />
         </el-header>
         <el-main>
+          <y-tags />
           <Main />
         </el-main>
       </el-container>
@@ -51,6 +52,6 @@ const asideWidth = computed(() => {
 }
 
 :deep(.el-breadcrumb) {
-    font-size: 12px !important;
+  font-size: 12px !important;
 }
 </style>

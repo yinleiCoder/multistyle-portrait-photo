@@ -10,10 +10,13 @@ const handleLogout = () => {
 };
 </script>
 <template>
-  <div class="w-full h-full shadow flex items-center px-2 box-border gap-2">
+  <div class="w-full h-full flex items-center px-2 box-border gap-2">
     <y-hamburger/>
     <y-breadcrumb/>
-    <div class="ml-auto">
+    <div class="ml-auto flex items-center gap-2">
+      <y-search/>
+      <y-screenfull/>
+      <y-lang-select/>
       <el-dropdown>
         <div>
           <el-avatar
