@@ -1,5 +1,4 @@
 import request from "./ajax";
-import { saveUser } from "../utils/user";
 
 export async function getUserInfoService(uid) {
   const newUser = await request.get(

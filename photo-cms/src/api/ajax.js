@@ -1,5 +1,8 @@
 import axios from "axios";
-import { getToken } from "../utils/token";
+import { ElMessage } from "element-plus";
+import { getItem, removeAllItems } from "../utils/storage";
+import { TOKEN } from "../constants";
+import { isTokenTimeout } from "../utils/auth";
 
 const instance = axios.create({
   timeout: 10 * 1000,
@@ -8,7 +11,14 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    config.headers["Authorization"] = `Bearer ${getToken()}`;
+    if (getItem(TOKEN)) {
+      if (isTokenTimeout()) {
+        removeAllItems();
+        ElMessage.error("token失效，请重新登录获取token");
+        return Promise.reject(new Error("token失效，请重新登录获取token"));
+      }
+      config.headers["Authorization"] = `Bearer ${getItem(TOKEN)}`;
+    }
     return config;
   },
   (err) => Promise.reject(err)
@@ -20,7 +30,7 @@ instance.interceptors.response.use(
     return responseData;
   },
   (err) => {
-    // element ui error message todo
+    ElMessage.error(err);
     return Promise.reject(err);
   }
 );
