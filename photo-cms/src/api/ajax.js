@@ -19,6 +19,8 @@ instance.interceptors.request.use(
       }
       config.headers["Authorization"] = `Bearer ${getItem(TOKEN)}`;
     }
+    // 接口国际化
+    config.headers["Accept-Language"] = getItem('app');
     return config;
   },
   (err) => Promise.reject(err)

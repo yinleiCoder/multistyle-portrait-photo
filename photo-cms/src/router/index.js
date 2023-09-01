@@ -52,6 +52,7 @@ const privateRoutes = [
         path: "/user/info/:id",
         name: "userInfo",
         component: () => import("../pages/UserInfoPage.vue"),
+        props: true,
         meta: {
           title: "userInfo",
         },
@@ -59,7 +60,7 @@ const privateRoutes = [
       {
         path: "/user/import",
         name: "import",
-        component: () => import("../pages/ImportPage.vue"),
+        component: () => import("../pages/ExcelImportPage.vue"),
         meta: {
           title: "userExport",
         },

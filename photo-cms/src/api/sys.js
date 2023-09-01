@@ -14,3 +14,14 @@ export const getUserInfoService = async (uid) => {
   );
   return userInfo;
 };
+
+export const getUserListService = async ({ page, pageSize }) => {
+  const data = await request.get(
+    `/rest/users?page=${page}&per_page=${pageSize}&q=`
+  );
+  return data;
+};
+
+export const deleteUserService = async (uid) => {
+  await request.delete(`rest/users/${uid}`);
+};

@@ -53,7 +53,7 @@ watch(isVisible, (val) => {
       :to="{ path: tag.fullPath }"
       class="flex items-center border p-1 rounded duration-200 relative"
       :class="{
-        'bg-zinc-800': isActive(tag),
+        'bg-main': isActive(tag),
         'text-white': isActive(tag),
         'bg-zinc-200/70': !isActive(tag),
       }"

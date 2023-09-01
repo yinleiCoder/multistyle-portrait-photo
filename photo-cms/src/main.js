@@ -11,6 +11,8 @@ import "./styles/element/index.scss";
 import "./styles/index.scss";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import i18n from "./i18n";
+import installFilter from "./filter";
+import installDirective from "./directives";
 import App from "./App.vue";
 
 const app = createApp(App);
@@ -24,4 +26,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 app.use(i18n);
+installFilter(app);
+installDirective(app);
 app.mount("#app");
