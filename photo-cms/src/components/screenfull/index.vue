@@ -8,6 +8,6 @@ const { isFullscreen, enter, exit, toggle } = useFullscreen();
     <y-svg-icon
       :name="isFullscreen ? 'IconOffscreen' : 'IconFullscreen'"
       class="w-6 h-6 cursor-pointer"
-    ></y-svg-icon>
+    />
   </div>
 </template>

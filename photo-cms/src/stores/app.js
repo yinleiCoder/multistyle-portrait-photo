@@ -42,6 +42,11 @@ export const useAppStore = defineStore(
       }
     }
 
+    function translateTags(config) {
+      const { index, tag } = config;
+      tagsViewList.value[index] = tag;
+    }
+
     return {
       sidebarOpened,
       language,
@@ -49,7 +54,8 @@ export const useAppStore = defineStore(
       setLanguage,
       triggerSidebarOpened,
       addTag,
-      removeTags
+      removeTags,
+      translateTags,
     };
   },
   {

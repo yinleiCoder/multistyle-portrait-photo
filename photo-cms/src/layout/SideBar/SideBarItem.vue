@@ -12,6 +12,7 @@ defineProps({
     <template #title>
         <MenuItem :title="route.meta.title" :icon="route.meta.icon"/>
     </template>
+    <!-- 递归渲染菜单 -->
     <SideBarItem
         v-for="item in route.children"
         :key="item.path"

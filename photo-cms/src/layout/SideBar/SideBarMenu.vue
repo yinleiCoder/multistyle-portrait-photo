@@ -1,26 +1,28 @@
-<script lang="ts" setup>
-import { ref, computed } from "vue";
+<script setup>
+import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAppStore } from "../../stores/app";
 import { filterRoutes, generateMenus } from "../../utils/route";
 import SideBarItem from "./SideBarItem.vue";
 
 const appStore = useAppStore();
-const router = useRouter();
 const route = useRoute();
+const router = useRouter();
+
 const routes = computed(() => {
+  // 获取完整的结构化路由表
   const fRoutes = filterRoutes(router.getRoutes());
   return generateMenus(fRoutes);
 });
-// console.log(JSON.stringify(routes.value, null, 2));
-const activeMenu = computed(() => {
+// 默认激活项
+const activeMenuItem = computed(() => {
   const { path } = route;
   return path;
 });
 </script>
 <template>
   <el-menu
-    :default-active="activeMenu"
+    :default-active="activeMenuItem"
     unique-opened
     :collapse="!appStore.sidebarOpened"
     background-color="#f2b9b2"

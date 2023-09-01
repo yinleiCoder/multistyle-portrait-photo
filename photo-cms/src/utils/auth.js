@@ -1,5 +1,6 @@
 import { TOKEN_TIME_STAMP, TOKEN_TIME_DURATION } from "../constants";
 import { getItem, setItem } from "./storage";
+
 /**
  * 时效token:
  *  1. 用户登录时，记录当前登录时间

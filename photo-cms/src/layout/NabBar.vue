@@ -4,6 +4,8 @@ import { useUserStore } from "../stores/user";
 
 const userStore = useUserStore();
 const router = useRouter();
+
+// 用户的主动退出
 const handleLogout = () => {
   userStore.logout();
   router.replace("/login");
@@ -13,7 +15,7 @@ const handleLogout = () => {
   <div class="w-full h-full flex items-center px-2 box-border gap-2">
     <y-hamburger/>
     <y-breadcrumb/>
-    <div class="ml-auto flex items-center gap-2">
+    <div class="ml-auto flex items-center gap-4">
       <y-search/>
       <y-screenfull/>
       <y-lang-select/>
@@ -22,18 +24,18 @@ const handleLogout = () => {
           <el-avatar
             :size="40"
             shape="square"
-            :src="userStore.avatar"
-            class="mr-2"
+            :src="userStore.userRef.avatar "
+            class="mr-1"
           />
           <el-icon><Tools /></el-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <router-link to="/">主页</router-link>
+              <router-link to="/">{{ $t('message.navBar.home') }}</router-link>
             </el-dropdown-item>
             <el-dropdown-item divided @click="handleLogout"
-              >退出登录</el-dropdown-item
+              >{{ $t('message.navBar.logout') }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>

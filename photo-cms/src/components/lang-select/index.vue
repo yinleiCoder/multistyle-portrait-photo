@@ -5,17 +5,18 @@ import { useAppStore } from "../../stores/app";
 
 const appStore = useAppStore();
 const i18n = useI18n();
+
 const language = computed(() => appStore.language);
-const handleSetLanguage = (lang) => {
+const handleModifyLanguage = (lang) => {
   i18n.locale.value = lang;
   appStore.setLanguage(lang);
 };
 </script>
 <template>
-  <el-dropdown trigger="click" @command="handleSetLanguage">
+  <el-dropdown trigger="click" @command="handleModifyLanguage">
     <div>
       <el-tooltip content="国际化" effect="light">
-        <y-svg-icon name="IconLang" class="w-6 h-6 border-2 rounded"></y-svg-icon>
+        <y-svg-icon name="IconLang" class="w-6 h-6 hover:bg-zinc-200 duration-300 rounded"/>
       </el-tooltip>
     </div>
     <template #dropdown>

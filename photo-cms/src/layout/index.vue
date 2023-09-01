@@ -10,17 +10,17 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 
 onMounted(async () => {
-  console.log(await userStore.getUserInfo());
+  await userStore.getUserInfo();
 });
 
 const asideWidth = computed(() => {
-  return appStore.sidebarOpened ? "180px" : "54px";
+  return appStore.sidebarOpened ? "180px" : "64px";
 });
 </script>
 <template>
   <div class="box relative w-full h-screen">
     <el-container style="height: 100vh">
-      <el-aside :width="asideWidth" class="duration-300">
+      <el-aside :width="asideWidth" class="duration-500">
         <SideBar />
       </el-aside>
       <el-container>

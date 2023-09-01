@@ -37,6 +37,20 @@ watch(
     immediate: true,
   }
 );
+
+watch(appStore.language, (val) => {
+  appStore.tagsViewList.forEach((route, index) => {
+    appStore.translateTags({
+      index,
+      tag: {
+        ...route,
+        title: getTitle(route)
+      }
+    })
+  });
+}, {
+  immediate: true,
+})
 </script>
 <template>
   <router-view v-slot="{ Component, route }">

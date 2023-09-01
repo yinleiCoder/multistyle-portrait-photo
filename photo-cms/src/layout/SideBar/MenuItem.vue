@@ -1,4 +1,5 @@
 <script setup>
+import { genMenui18nTitle } from "../../utils/i18n.js";
 defineProps({
   title: {
     type: String,
@@ -11,8 +12,8 @@ defineProps({
 });
 </script>
 <template>
-  <el-icon :size="20">
+  <el-icon :size="18">
     <component :is="icon"></component>
   </el-icon>
-  <span>{{ title }}</span>
+  <span>{{ genMenui18nTitle(title) }}</span>
 </template>

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAppStore } from "../../stores/app";
 const props = defineProps({
@@ -11,6 +10,7 @@ const props = defineProps({
 
 const router = useRouter();
 const appStore = useAppStore();
+
 const onRefreshClick = () => {
   router.go(0);
 };
@@ -29,7 +29,7 @@ const onCloseOtherClick = () => {
 </script>
 <template>
   <ul
-    class="border p-2 flex flex-col gap-1 rounded shadow text-sm absolute bg-white cursor-pointer"
+    class="border p-2 flex flex-col gap-1 rounded shadow text-sm absolute bg-white cursor-pointer z-50"
   >
     <li @click="onRefreshClick">刷新</li>
     <li @click="onCloseRightClick">关闭右侧</li>

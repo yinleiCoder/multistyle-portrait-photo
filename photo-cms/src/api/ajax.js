@@ -12,7 +12,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     if (getItem(TOKEN)) {
-      if (isTokenTimeout()) {
+      if (isTokenTimeout()) {// 时效token是否超时
         removeAllItems();
         ElMessage.error("token失效，请重新登录获取token");
         return Promise.reject(new Error("token失效，请重新登录获取token"));

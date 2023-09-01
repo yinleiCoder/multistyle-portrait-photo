@@ -1,15 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Layout from "../layout/index.vue";
 import { getItem } from "../utils/storage";
 import { TOKEN } from "../constants";
-import Layout from "../layout/index.vue";
 
+/**
+ * 动态路由菜单：
+ * 1. 定义路由表定义动态路由菜单规则
+ * 2. 根据规则制定路由表
+ * 3. 根据规则依据路由表生成菜单
+ * children是二级标签，同时有title和icon是要显示的菜单
+ */
+// 动态路由表
 const privateRoutes = [
   {
     path: "/user",
     component: Layout,
     redirect: "/user/manage",
     meta: {
-      title: "用户",
+      title: "user",
       icon: "User",
     },
     children: [
@@ -18,7 +26,7 @@ const privateRoutes = [
         name: "userManage",
         component: () => import("../pages/UserManagePage.vue"),
         meta: {
-          title: "用户管理",
+          title: "userManage",
           icon: "Flag",
         },
       },
@@ -27,7 +35,7 @@ const privateRoutes = [
         name: "userRole",
         component: () => import("../pages/RoleListPage.vue"),
         meta: {
-          title: "角色列表",
+          title: "userRoleList",
           icon: "List",
         },
       },
@@ -36,7 +44,7 @@ const privateRoutes = [
         name: "userPermission",
         component: () => import("../pages/PermissionListPage.vue"),
         meta: {
-          title: "权限列表",
+          title: "userPermissionList",
           icon: "WarningFilled",
         },
       },
@@ -45,7 +53,7 @@ const privateRoutes = [
         name: "userInfo",
         component: () => import("../pages/UserInfoPage.vue"),
         meta: {
-          title: "用户信息",
+          title: "userInfo",
         },
       },
       {
@@ -53,7 +61,7 @@ const privateRoutes = [
         name: "import",
         component: () => import("../pages/ImportPage.vue"),
         meta: {
-          title: "Excel导入",
+          title: "userExport",
         },
       },
     ],
@@ -63,7 +71,7 @@ const privateRoutes = [
     component: Layout,
     redirect: "/article/ranking",
     meta: {
-      title: "文章",
+      title: "article",
       icon: "Notebook",
     },
     children: [
@@ -72,7 +80,7 @@ const privateRoutes = [
         name: "articleRanking",
         component: () => import("../pages/ArticleRankingPage.vue"),
         meta: {
-          title: "文章排名",
+          title: "articleRank",
           icon: "TrendCharts",
         },
       },
@@ -81,7 +89,7 @@ const privateRoutes = [
         name: "articleDetail",
         component: () => import("../pages/ArticleDetailPage.vue"),
         meta: {
-          title: "文章详情",
+          title: "articleDetail",
         },
       },
       {
@@ -89,7 +97,7 @@ const privateRoutes = [
         name: "articleCreate",
         component: () => import("../pages/ArticleCreatePage.vue"),
         meta: {
-          title: "创建文章",
+          title: "articleCreate",
           icon: "EditPen",
         },
       },
@@ -98,7 +106,7 @@ const privateRoutes = [
         name: "articleEditor",
         component: () => import("../pages/ArticleCreatePage.vue"),
         meta: {
-          title: "文章编辑",
+          title: "articleEdit",
         },
       },
     ],
@@ -120,7 +128,7 @@ const publicRoutes = [
         name: "profile",
         component: () => import("../pages/ProfilePage.vue"),
         meta: {
-          title: "个人中心",
+          title: "profile",
           icon: "Monitor",
         },
       },
@@ -142,15 +150,13 @@ const router = createRouter({
 const whiteList = ["/login"];
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  if (getItem(TOKEN)) {
-    // 已登录
+  if (getItem(TOKEN)) {// 已登录
     if (to.path === "/login") {
       next("/");
     } else {
       next();
     }
-  } else {
-    // 未登录
+  } else {// 未登录
     if (whiteList.includes(to.path)) {
       next();
     } else {

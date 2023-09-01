@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useAppStore } from "../../stores/app";
 import ContextMenu from "./ContextMenu.vue";
+import { genMenui18nTitle } from "../../utils/i18n.js";
 
 const isVisible = ref(false);
 const appStore = useAppStore();
@@ -35,6 +36,7 @@ const handleOpenMenu = (e, index) => {
 const closeMenu = () => {
   isVisible.value = false;
 };
+
 watch(isVisible, (val) => {
   if (val) {
     document.body.addEventListener("click", closeMenu);
@@ -49,11 +51,15 @@ watch(isVisible, (val) => {
       v-for="(tag, index) in appStore.tagsViewList"
       :key="tag.fullPath"
       :to="{ path: tag.fullPath }"
-      class="flex items-center border p-1 rounded hover:bg-zinc-800 hover:text-white duration-200"
-      :class="{ 'bg-zinc-800': isActive(tag), 'text-white': isActive(tag) }"
+      class="flex items-center border p-1 rounded duration-200 relative"
+      :class="{
+        'bg-zinc-800': isActive(tag),
+        'text-white': isActive(tag),
+        'bg-zinc-200/70': !isActive(tag),
+      }"
       @contextmenu.prevent="handleOpenMenu($event, index)"
-      >{{ tag.title
-      }}<el-icon
+      ><span>{{ genMenui18nTitle(tag.meta.title) }}</span
+      ><el-icon
         class="ml-1"
         v-show="!isActive(tag)"
         @click.prevent.stop="handleCloseTag(index)"

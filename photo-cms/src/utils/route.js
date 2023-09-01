@@ -2,7 +2,6 @@ import path from "path-browserify";
 /**
  * 解析路由表，获取结构化数据，生成动态Menu
  */
-
 const getChildrenRoutes = (routes) => {
   const result = [];
   routes.forEach((route) => {
