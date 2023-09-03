@@ -30,6 +30,8 @@ const schema = new mongoose.Schema(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
       select: false,
     },
+    // RBAC
+    roles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }],
   },
   { timestamps: true }
 );

@@ -10,6 +10,8 @@ module.exports = (app) => {
   const User = require("../../models/User");
   const Post = require("../../models/Post");
   const Comment = require("../../models/Comment");
+  const Role = require("../../models/Role");
+  const Priority = require("../../models/Priority");
 
   // 通用CRUD
   router.post("/", async (req, res) => {
@@ -47,11 +49,14 @@ module.exports = (app) => {
     if (req.Model.modelName === "Post") {
       queryOptions.populate = "owner";
     }
+    if (req.Model.modelName === "User") {
+      queryOptions.populate = "roles";
+    }
     const totalCount = await req.Model.countDocuments({
       $or: [{ username: q }, { title: q }, { content: q }],
     });
     const items = await req.Model.find({
-      $or: [{ username: q }, { title: q }, { content: q }],
+      $or: [{ username: q }, { title: q }, { describe: q }, { content: q }],
     })
       .setOptions(queryOptions)
       .limit(perPage)
@@ -72,6 +77,12 @@ module.exports = (app) => {
     const queryOptions = {};
     if (req.Model.modelName === "Post") {
       queryOptions.populate = "owner";
+    }
+    if (req.Model.modelName === "User") {
+      queryOptions.populate = "roles";
+    }
+    if (req.Model.modelName === "Role") {
+      queryOptions.populate = "priorities";
     }
     const model = await req.Model.findById(req.params.id)
       .select(selectFileds)
@@ -254,6 +265,26 @@ module.exports = (app) => {
     res.send(comments);
   });
 
+  // 为用户分配角色
+  app.post("/web/api/assignRole/:userId", authMiddleware(), async (req, res) => {
+    const { userId } = req.params;
+    const { roleIds } = req.body;
+    const user = await User.findById(userId);
+    if (roleIds.length === 0) {
+      user.roles = [];
+    } else {
+      roleIds.forEach((rid) => {
+        user.roles.push(rid);
+      });
+    }
+    await user.save();
+    res.send({
+      success: true,
+    });
+  });
+
+  // 获取某个角色的权限
+
   // Google人类行为验证 https://developers.google.com/recaptcha/docs/verify
   app.post("/captcha", async (req, res) => {
     if (
@@ -269,8 +300,8 @@ module.exports = (app) => {
 
     const verificationURL = "https://www.google.com/recaptcha/api/siteverify";
 
-      // siteKey: "6LdDWoQnAAAAAC5jdVS3cHg15CAKmp2r5hK2mQm-",
-  // secretKey: "6LdDWoQnAAAAADljuk8I1YYV8EeLKYq85Evem1IF",
+    // siteKey: "6LdDWoQnAAAAAC5jdVS3cHg15CAKmp2r5hK2mQm-",
+    // secretKey: "6LdDWoQnAAAAADljuk8I1YYV8EeLKYq85Evem1IF",
     const { data } = axios.post(verificationURL, {
       secret: "",
       response: "",

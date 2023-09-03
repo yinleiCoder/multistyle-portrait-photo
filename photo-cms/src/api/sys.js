@@ -25,3 +25,14 @@ export const getUserListService = async ({ page, pageSize }) => {
 export const deleteUserService = async (uid) => {
   await request.delete(`rest/users/${uid}`);
 };
+
+export const getUserRolesService = async (uid) => {
+  const userInfo = await request.get(
+    `/rest/users/${uid}?fields=headline;social_link;location`
+  );
+  return userInfo.roles;
+};
+
+export const updateUserRolesService = async (uid, roleIds) => {
+  await request.post(`/assignRole/${uid}`, { roleIds });
+};

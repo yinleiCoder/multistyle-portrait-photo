@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { ref, onMounted, onActivated, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getUserListService, deleteUserService } from "../api/sys";
 
@@ -48,8 +48,18 @@ const handleExcelEmport = () => {
 };
 
 const handleShowUserInfo = (uid) => {
-  router.push(`/user/info/${uid}`)
-} 
+  router.push(`/user/info/${uid}`);
+};
+
+const roleDialogVisible = ref(false);
+const selectedUserId = ref("");
+const handleShowRoleList = (row) => {
+  roleDialogVisible.value = true;
+  selectedUserId.value = row._id;
+};
+watch(roleDialogVisible, (val) => {
+  if (!val) selectedUserId.value = "";
+});
 </script>
 <template>
   <el-card>
@@ -84,10 +94,10 @@ const handleShowUserInfo = (uid) => {
           ></el-image>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('message.excel.role')" align="center">
+      <el-table-column :label="$t('message.excel.role')" align="center" prop="roles">
         <template #default="{ row }">
-          <div v-if="row.role && row.role.length > 0">
-            <el-tag v-for="item in row.role" :key="item.id" size="small">{{
+          <div v-if="row.roles && row.roles.length > 0">
+            <el-tag v-for="item in row.roles" :key="item._id" size="small">{{
               item.title
             }}</el-tag>
           </div>
@@ -107,12 +117,18 @@ const handleShowUserInfo = (uid) => {
       </el-table-column>
       <el-table-column :label="$t('message.excel.action')" align="center">
         <template #default="{ row }">
-          <el-button type="primary" size="small" @click="handleShowUserInfo(row._id)">{{
-            $t("message.excel.show")
-          }}</el-button>
-          <el-button type="info" size="small">{{
-            $t("message.excel.showRole")
-          }}</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="handleShowUserInfo(row._id)"
+            >{{ $t("message.excel.show") }}</el-button
+          >
+          <el-button
+            type="info"
+            size="small"
+            @click="handleShowRoleList(row)"
+            >{{ $t("message.excel.showRole") }}</el-button
+          >
           <el-button
             type="danger"
             size="small"
@@ -137,4 +153,5 @@ const handleShowUserInfo = (uid) => {
     </div>
   </el-card>
   <y-export-excel v-model="exportToExcelVisible"></y-export-excel>
+  <y-roles-assign v-model="roleDialogVisible" :uid="selectedUserId" @updateRole="getListData" />
 </template>
